@@ -12,10 +12,10 @@ website:
   cookie-consent:
     type: implied
     prefs-text: "Manage cookies"
-  title: "SLU SCORE Module Preprint Repository"
+  title: "West Point SCORE Module Preprint Repository"
   page-footer: 
     center:
-      Maintained by Ivan Ramler <br>
+      Maintained by All of Us! <br>
     
       We use cookies to track usage statistics 
       to help measure impact of the materials
@@ -28,7 +28,7 @@ website:
         text: Home
       - by-statsds-topic.qmd
       - href: _team.qmd
-        text: SLU SCORE TEAM
+        text: West Point SCORE Team
       - href: https://modules.scorenetwork.org/
         text: SCORE Module Repository
       - href: https://data.scorenetwork.org/

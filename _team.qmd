@@ -2,8 +2,8 @@
 
 ## Faculty
 
-::: {.callout-note icon=false title="Ivan Ramler"  collapse=true appearance="minimal"}
-[Ivan Ramler](https://iramler.github.io/){target="_blank"} is the Jack and Sylvia Burry Associate Professor of Statistics and Data Science. He has a wide array of interests in applying statistics to sports - including, but not limited to esports, volleyball, football, and most olympic events.
+::: {.callout-note icon=false title="Nick Clark"  collapse=true appearance="minimal"}
+[Nick Clark](https://nick3703.github.io/){target="_blank"} is pretty cool
 :::
 
 ::: {.callout-note icon=false title="Robin Lock"  collapse=true appearance="minimal"}
