@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="John Beggs">
+<meta name="author" content="Skyler Chauff">
+<meta name="dcterms.date" content="2024-07-01">
+<meta name="description" content="An Introduction to Ordinal Regression Using Basketball">
+
+<title>West Point SCORE Module Preprint Repository - Ordinal Logistic Regression Basketball Salary Prediction</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-JVDQHPRYT1"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-JVDQHPRYT1', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">West Point SCORE Module Preprint Repository</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../by-statsds-topic.html" aria-current="page"> 
+<span class="menu-text">Modules By Topic</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../_team.html"> 
+<span class="menu-text">West Point SCORE Team</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://modules.scorenetwork.org/"> 
+<span class="menu-text">SCORE Module Repository</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://data.scorenetwork.org/"> 
+<span class="menu-text">Data Repository</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../basketball/nba ordinal regression/index.html">Basketball</a></li><li class="breadcrumb-item"><a href="../../basketball/nba ordinal regression/index.html">Ordinal Logistic Regression Basketball Salary Prediction</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../_team.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Team</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../by-statsds-topic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modules By Topic</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Basketball</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../basketball/nba ordinal regression/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Ordinal Logistic Regression Basketball Salary Prediction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">BlackJack</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../BlackJack/BlackJack_Log_Reg/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BlackJack Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Lacrosse</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Lacrosse/expected_goals/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expected Goals in Lacrosse</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Obstacle Courses</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../obstacle_courses/West_Point_Indoor_Obstacle_Course/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Indoor Obstacle Course Test</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Soccer</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../soccer/soccer_expected_goals/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expected Goals in Soccer</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a>
+  <ul class="collapse">
+  <li><a href="#sports-context" id="toc-sports-context" class="nav-link" data-scroll-target="#sports-context">Sports Context</a></li>
+  </ul></li>
+  <li><a href="#learning-goals." id="toc-learning-goals." class="nav-link" data-scroll-target="#learning-goals.">LEARNING GOALS.</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">INTRODUCTION</a>
+  <ul class="collapse">
+  <li><a href="#sports-application" id="toc-sports-application" class="nav-link" data-scroll-target="#sports-application">Sports Application</a></li>
+  <li><a href="#statistical-technique" id="toc-statistical-technique" class="nav-link" data-scroll-target="#statistical-technique">Statistical Technique</a>
+  <ul class="collapse">
+  <li><a href="#what-about-logistic-regression" id="toc-what-about-logistic-regression" class="nav-link" data-scroll-target="#what-about-logistic-regression">What about Logistic Regression?</a></li>
+  <li><a href="#why-ordinal-regression-here" id="toc-why-ordinal-regression-here" class="nav-link" data-scroll-target="#why-ordinal-regression-here">Why Ordinal Regression Here?</a></li>
+  </ul></li>
+  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
+  </ul></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">DATA</a>
+  <ul class="collapse">
+  <li><a href="#what-data-was-used-and-where-did-it-come-from" id="toc-what-data-was-used-and-where-did-it-come-from" class="nav-link" data-scroll-target="#what-data-was-used-and-where-did-it-come-from">What Data was Used and Where did it Come From?</a></li>
+  <li><a href="#cleaning-and-preprocessing" id="toc-cleaning-and-preprocessing" class="nav-link" data-scroll-target="#cleaning-and-preprocessing">Cleaning and Preprocessing</a>
+  <ul class="collapse">
+  <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection">Variable Selection</a></li>
+  <li><a href="#variable-meaning-introduction" id="toc-variable-meaning-introduction" class="nav-link" data-scroll-target="#variable-meaning-introduction">Variable Meaning Introduction</a></li>
+  </ul></li>
+  <li><a href="#variable-drawbacks" id="toc-variable-drawbacks" class="nav-link" data-scroll-target="#variable-drawbacks">Variable Drawbacks</a></li>
+  </ul></li>
+  <li><a href="#binning-the-variables" id="toc-binning-the-variables" class="nav-link" data-scroll-target="#binning-the-variables">Binning the Variables</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">EXERCISE 1</a>
+  <ul class="collapse">
+  <li><a href="#put-solution-here" id="toc-put-solution-here" class="nav-link" data-scroll-target="#put-solution-here">Put solution here</a></li>
+  </ul></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">EXERCISE 2</a>
+  <ul class="collapse">
+  <li><a href="#put-solution-here-1" id="toc-put-solution-here-1" class="nav-link" data-scroll-target="#put-solution-here-1">Put solution here</a></li>
+  </ul></li>
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">EXERCISE 3</a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">EXERCISE 4</a>
+  <ul class="collapse">
+  <li><a href="#put-solution-here-2" id="toc-put-solution-here-2" class="nav-link" data-scroll-target="#put-solution-here-2">Put solution here</a></li>
+  <li><a href="#put-solution-here-3" id="toc-put-solution-here-3" class="nav-link" data-scroll-target="#put-solution-here-3">Put solution here</a></li>
+  </ul></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5">EXERCISE 5</a></li>
+  </ul></li>
+  <li><a href="#methods-and-instructional-content" id="toc-methods-and-instructional-content" class="nav-link" data-scroll-target="#methods-and-instructional-content">METHODS AND INSTRUCTIONAL CONTENT</a>
+  <ul class="collapse">
+  <li><a href="#what-is-ordinal-logistic-regression" id="toc-what-is-ordinal-logistic-regression" class="nav-link" data-scroll-target="#what-is-ordinal-logistic-regression">What Is Ordinal Logistic Regression?</a></li>
+  <li><a href="#real-world-application-of-ordinal-logistic-regression" id="toc-real-world-application-of-ordinal-logistic-regression" class="nav-link" data-scroll-target="#real-world-application-of-ordinal-logistic-regression">Real World Application of Ordinal Logistic Regression</a></li>
+  <li><a href="#mathematical-formulation" id="toc-mathematical-formulation" class="nav-link" data-scroll-target="#mathematical-formulation">Mathematical Formulation</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#why-ordinal-logistic-regression" id="toc-why-ordinal-logistic-regression" class="nav-link" data-scroll-target="#why-ordinal-logistic-regression">Why Ordinal Logistic Regression?</a>
+  <ul class="collapse">
+  <li><a href="#put-solution-here-4" id="toc-put-solution-here-4" class="nav-link" data-scroll-target="#put-solution-here-4">Put solution here</a></li>
+  </ul></li>
+  <li><a href="#fitting-the-ordinal-logistic-regression" id="toc-fitting-the-ordinal-logistic-regression" class="nav-link" data-scroll-target="#fitting-the-ordinal-logistic-regression">Fitting the Ordinal Logistic Regression</a>
+  <ul class="collapse">
+  <li><a href="#put-solution-here-5" id="toc-put-solution-here-5" class="nav-link" data-scroll-target="#put-solution-here-5">Put solution here</a></li>
+  </ul></li>
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">EXERCISE 6</a></li>
+  </ul></li>
+  <li><a href="#player-1-lebron-james" id="toc-player-1-lebron-james" class="nav-link" data-scroll-target="#player-1-lebron-james">PLAYER 1: LeBron James</a>
+  <ul class="collapse">
+  <li><a href="#put-solution-here-6" id="toc-put-solution-here-6" class="nav-link" data-scroll-target="#put-solution-here-6">Put solution here</a></li>
+  </ul></li>
+  <li><a href="#player-2-nicolas-batum" id="toc-player-2-nicolas-batum" class="nav-link" data-scroll-target="#player-2-nicolas-batum">PLAYER 2: Nicolas Batum</a>
+  <ul class="collapse">
+  <li><a href="#put-solution-here-7" id="toc-put-solution-here-7" class="nav-link" data-scroll-target="#put-solution-here-7">Put solution here</a></li>
+  </ul></li>
+  <li><a href="#player-3-justin-jackson" id="toc-player-3-justin-jackson" class="nav-link" data-scroll-target="#player-3-justin-jackson">PLAYER 3: Justin Jackson</a>
+  <ul class="collapse">
+  <li><a href="#put-solution-here-8" id="toc-put-solution-here-8" class="nav-link" data-scroll-target="#put-solution-here-8">Put solution here</a></li>
+  </ul></li>
+  <li><a href="#player-4-seth-curry" id="toc-player-4-seth-curry" class="nav-link" data-scroll-target="#player-4-seth-curry">PLAYER 4: Seth Curry</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">CONCLUSION</a>
+  <ul class="collapse">
+  <li><a href="#learning-goals-revisited" id="toc-learning-goals-revisited" class="nav-link" data-scroll-target="#learning-goals-revisited">Learning Goals, Revisited</a></li>
+  <li><a href="#wrap-up-and-future-directions" id="toc-wrap-up-and-future-directions" class="nav-link" data-scroll-target="#wrap-up-and-future-directions">Wrap Up and Future Directions</a>
+  <ul class="collapse">
+  <li><a href="#further-model-evaluation" id="toc-further-model-evaluation" class="nav-link" data-scroll-target="#further-model-evaluation">Further Model evaluation</a></li>
+  <li><a href="#future-analysis-in-other-areas" id="toc-future-analysis-in-other-areas" class="nav-link" data-scroll-target="#future-analysis-in-other-areas">Future Analysis in Other Areas</a></li>
+  <li><a href="#related-concepts-and-skills" id="toc-related-concepts-and-skills" class="nav-link" data-scroll-target="#related-concepts-and-skills">Related Concepts and Skills</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#works-cited" id="toc-works-cited" class="nav-link" data-scroll-target="#works-cited">Works Cited:</a></li>
+  <li><a href="#assignment-citations" id="toc-assignment-citations" class="nav-link" data-scroll-target="#assignment-citations">Assignment Citations:</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../basketball/nba ordinal regression/index.html">Basketball</a></li><li class="breadcrumb-item"><a href="../../basketball/nba ordinal regression/index.html">Ordinal Logistic Regression Basketball Salary Prediction</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Ordinal Logistic Regression Basketball Salary Prediction</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Logistic Regression</div>
+    <div class="quarto-category">Decision Trees</div>
+    <div class="quarto-category">Gini index</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    An Introduction to Ordinal Regression Using Basketball
+  </div>
+</div>
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">John Beggs </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            West Point
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Skyler Chauff </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            West Point
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 1, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Solutions to this module are available <a href="../..\NBA-Ordinal-Regression-Solutions.pdf">here</a></p>
+<section id="purpose" class="level1">
+<h1>Purpose</h1>
+<p>The statistical topic this module will cover is ORDINAL LOGISTIC REGRESSION as applied to BASKETBALL! When we can’t model phenomena as a binary outcome with logistic regression and instead must expand potential response variables by their level (low, medium, high or small, medium, large), we can use ordinal logistic regression. Ordinal logistic regression also makes more efficient use of data by treating it as nominal (think levels) instead of numeric (think linear regression).</p>
+<section id="sports-context" class="level2">
+<h2 class="anchored" data-anchor-id="sports-context">Sports Context</h2>
+<p>We will apply Ordinal Logistic Regression into predicting the best salary to pay NBA players based on their previous skill. Every year, teams in the NBA assign contracts to players based on their previous performance. It’s important for NBA teams, who hire data scientists, to strike a balance between properly compensating players for their skill and also reserving money and staying under budget. However, learners should have an upfront understanding of the limitations of our model: it does not account for rookie players, and only applies to players who are no longer on rookie contracts. We wanted to keep this as simple as possible for those trying to understand Ordinal Logistic Regression.</p>
+</section>
+</section>
+<section id="learning-goals." class="level1">
+<h1>LEARNING GOALS.</h1>
+<p>A list of the learning outcomes for those that complete the module.</p>
+<p>By the end of this module, students ought to be able to:</p>
+<ol type="1">
+<li><p>Understand how Ordinal Logistic Regression will be applied to an NBA dataset and predicting NBA salary.</p></li>
+<li><p>Understand the Theory and Application of Ordinal Logistic Regression (OLR).</p></li>
+<li><p>Prepare data for OLR.</p></li>
+<li><p>Construct an OLR model in R using relevant variables from an NBA data set.</p></li>
+<li><p>Interpret OLR model coefficients and their implications for predicting NBA salary.</p></li>
+<li><p>Apply OLR to predict salary and evaluate your model’s performance.</p></li>
+</ol>
+</section>
+<section id="introduction" class="level1">
+<h1>INTRODUCTION</h1>
+<section id="sports-application" class="level2">
+<h2 class="anchored" data-anchor-id="sports-application">Sports Application</h2>
+<p>Each year, the NBA as a whole makes upwards of $10.58 billion in revenue. WOW! Have you ever wondered where all of this money goes or how teams determine how much money each player gets paid? Believe it or not, the allocation of this funding based on the relevant skills and talents of the players is important for nurturing player development while ensuring the NBA’s competitive balance. Over time, in order to have a good team and thus make more money, owners and general managers must compensate their players adequately so that they do not join other teams. However, teams must have enough money for self-sustainment and funding events. As such, the unique balance arises whereby teams must pay players just enough to satisfy them while ensuring that the team makes a profit off of their games and events.</p>
+<p>As a preliminary measure of finding the best salary to pay players based on previous skill, we aim to determine which factors can predict the bin of an NBA salary. As such, this bin will have three levels: low, medium, and high. We feel that this model is a precursor to someone understanding how NBA teams ensure efficiency of monetary allocation and thus team financial success.</p>
+</section>
+<section id="statistical-technique" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-technique">Statistical Technique</h2>
+<p>Ordinal Logistic Regression is a form of Logistic Regression in which one can model a relationship between an ordinal response variable (NBA salary bin: low, medium, high) and one or more explanatory variables (player statistics, performance, and more).</p>
+<section id="what-about-logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="what-about-logistic-regression">What about Logistic Regression?</h3>
+<p>It’s important to also understand before we get started that logistic regression essentially estimates the probability of an event occurring, such as whether someone does something or not. In contrast to linear regression, logistic regression has a binary (or more than two binned) response variable.</p>
+</section>
+<section id="why-ordinal-regression-here" class="level3">
+<h3 class="anchored" data-anchor-id="why-ordinal-regression-here">Why Ordinal Regression Here?</h3>
+<p>The difference between Ordinal and Logistic Regression is that in ordinal, the response variable has a specific order. For example, in this case, the “order” is “low, medium, and high” salary. Another example of this might be survey responses: for example, “bad, alright, awesome” which need to be in the correct order and are also not numerically spaced. One final example would be predicting the stages of a disease. For example, in trying to predict the stages of cancer based on previous patient data, order of predictions would matter because such order informs the level of metastasis of the cancer. As you can probably tell, Ordinal Logistic regression is more complex than normal logistic regression due to the nature of having multiple categories and thus thresholds.</p>
+</section>
+</section>
+<section id="instructions" class="level2">
+<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<p>In this module, you will use R and its associated packages to perform Ordinal Logistic Regression. Follow along below. Some code will be given to you and some you will have to determine for yourself. The steps should logically flow. Make sure you complete all steps in order so that you are not confused from skipping around.</p>
+<p>First, we need to load the required packages. You may need to install packages. If that is the case, uncomment the install packages line of code below and insert the necessary packages that you need to download.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>corrplot 0.94 loaded</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'MASS'
+
+The following object is masked from 'package:dplyr':
+
+    select</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'reshape2'
+
+The following object is masked from 'package:tidyr':
+
+    smiths</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lattice
+
+Attaching package: 'caret'
+
+The following object is masked from 'package:purrr':
+
+    lift</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(c('package1','package2','package3'...))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="data" class="level1">
+<h1>DATA</h1>
+<section id="what-data-was-used-and-where-did-it-come-from" class="level2">
+<h2 class="anchored" data-anchor-id="what-data-was-used-and-where-did-it-come-from">What Data was Used and Where did it Come From?</h2>
+<p>We will now read the NBA data. The data is linked at the following cite which also has an explanation of what the variables in the data mean and various ways to analyze it. See below:</p>
+<p>https://towardsdatascience.com/predicting-nba-salaries-with-machine-learning-ed68b6f75566</p>
+<p>The data on NBA players contains information on various measurables in professional basketball from the 2021-2022 NBA regular season. It contains 812 player-team stints for the season, meaning that there are 812 individual observations. Were a player to have played for multiple teams in the given season, they are recorded as unique observations. This is an advantage for ordinal logistic regression because we are looking to see the factors that determine the bin of a player’s salary. It is worth noting that this dataset is already “cleaned” in the sense that there are no missing, or NA, values. However, for your awareness, it is worth noting that NBA data is collected by Second Spectrum softward which tracks the movements of each player on the court and the basketball 25 times per second! Let’s go ahead and load in the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>bball <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"NBA_Data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1264 Columns: 83
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (3): Player, Tm, Season S-1
+dbl (80): Age, G, GS, MP_per_game, FG_per_game, FGA_per_game, FG%_per_game, ...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(bball[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Player</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: left;">Tm</th>
+<th style="text-align: right;">G</th>
+<th style="text-align: right;">GS</th>
+<th style="text-align: right;">MP_per_game</th>
+<th style="text-align: right;">FG_per_game</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Precious Achiuwa</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">TOR</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">20.7</td>
+<td style="text-align: right;">3.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Steven Adams</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: left;">MEM</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">27.0</td>
+<td style="text-align: right;">3.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bam Adebayo</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: left;">MIA</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">34.6</td>
+<td style="text-align: right;">8.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ochai Agbaji</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: left;">UTA</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">20.5</td>
+<td style="text-align: right;">2.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Santi Aldama</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: left;">MEM</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">21.8</td>
+<td style="text-align: right;">3.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nickeil Alexander-Walker</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">MIN</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">2.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="cleaning-and-preprocessing" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-and-preprocessing">Cleaning and Preprocessing</h2>
+<p>In the next few sections, you’ll spend time learning to clean and visualize the data. Data cleaning is often the most important part of any data science project, so pay close attention to what’s going on, and ensure that you answer the associated questions.</p>
+<section id="variable-selection" class="level3">
+<h3 class="anchored" data-anchor-id="variable-selection">Variable Selection</h3>
+<p>Here, we are selecting the variables that we will use in this analysis. This includes Player, Team, Games Played, Games Started, Center Position, Power Forward Position, Point Guard Position, Small Forward Position, Shooting Guard Position, Field Goals Made per Game, 3-Point Field Goals Made per Game, Steals per Game, Blocks per Game, Points per Game, Total Points, Salary, and Age. Let’s also save it as a new data frame in order to preserve the original. It’s important when doing a study to document and even save “old” Dataframes so that if you need to retrace your steps of analysis you can easily do so by referencing old dataframes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the data we actually need</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bball_clean <span class="ot">&lt;-</span> bball <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Player, Age, Tm, G, GS, C, PF, PG, SF, SG,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>         FG_per_game, <span class="st">`</span><span class="at">3P_per_game</span><span class="st">`</span>, </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>         STL_per_game, BLK_per_game, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>         PTS_per_game, PTS_totals,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Salary S</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="variable-meaning-introduction" class="level3">
+<h3 class="anchored" data-anchor-id="variable-meaning-introduction">Variable Meaning Introduction</h3>
+<p>If you’re like the authors, you’re not necessarily a Basketball person and are also a bit confused on what each of these variables mean. Below is a definition of each. We want you to focus on the statistics of this instead of trying to understand what everything means! See below:</p>
+<p>Player: The name of the basketball player.<br>
+Team: The team the player is currently playing for.<br>
+Games Played: The number of games the player has participated in.<br>
+Games Started: The number of games the player has started. Center Position: A binary variable indicating whether the player primarily plays the center position (1 if yes, 0 if no).<br>
+Power Forward Position: A binary variable indicating whether the player primarily plays the power forward position (1 if yes, 0 if no).<br>
+Point Guard Position: A binary variable indicating whether the player primarily plays the point guard position (1 if yes, 0 if no).<br>
+Small Forward Position: A binary variable indicating whether the player primarily plays the small forward position (1 if yes, 0 if no).<br>
+Shooting Guard Position: A binary variable indicating whether the player primarily plays the shooting guard position (1 if yes, 0 if no).<br>
+Field Goals Made per Game: The average number of field goals made by the player per game.<br>
+3-Point Field Goals Made per Game: The average number of three-point field goals made by the player per game.<br>
+Steals per Game: The average number of steals made by the player per game.<br>
+Blocks per Game: The average number of shots blocked by the player per game.<br>
+Points per Game: The average number of points scored by the player per game.<br>
+Total Points: The total number of points scored by the player.<br>
+Salary: The salary of the player in dollars.<br>
+Age: The age of the player in years.</p>
+</section>
+</section>
+<section id="variable-drawbacks" class="level2">
+<h2 class="anchored" data-anchor-id="variable-drawbacks">Variable Drawbacks</h2>
+<p>One potential drawback of our selected variables is the lack of categorical features. Position is the only one that will be considered in the model. However, we are confident that the data is clean enough initially and well-organized. From the initial exploration, notice that the distributions for some variables, salary included, had been scaled down already. Another potential drawback is that we will be unable to create a model that considers years in the league or whether the player was on a rookie contract. This information simply isn’t in the data. Still, we can get a solid picture of the predictions due to the binning and we find that our model is relatively accurate in predicting player salary even despite these limitations.</p>
+</section>
+</section>
+<section id="binning-the-variables" class="level1">
+<h1>Binning the Variables</h1>
+<p>At this point, we need to bin the NBA salaries. We will bin into three groups of low, medium, and high. This will enable us to conduct ordinal logistic regression in which we will predict the bin of players based on their performance in the game (low, medium or high).</p>
+<section id="exercise-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1">EXERCISE 1</h2>
+<p>In this, we recommend binning them based on percentiles. Because we want them in thirds, set the first bin at the 33rd percentile and the second and the 67th percentile. What are some other ways you might bin a numerical variable like salary?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Create the quantiles and store them as perc_33 and perc_67</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>perc_33 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(bball_clean<span class="sc">$</span><span class="st">`</span><span class="at">Salary S</span><span class="st">`</span>, <span class="at">probs =</span> <span class="fl">0.33</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>perc_67 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(bball_clean<span class="sc">$</span><span class="st">`</span><span class="at">Salary S</span><span class="st">`</span>, <span class="at">probs =</span> <span class="fl">0.67</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#categrize into three categories based on where the values lie</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#for salary in the dataset: "Low", "Medium", or "High"</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>bball_clean<span class="sc">$</span>sal_bin <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(bball_clean<span class="sc">$</span><span class="st">`</span><span class="at">Salary S</span><span class="st">`</span> <span class="sc">&lt;=</span> perc_33, <span class="st">"Low"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">ifelse</span>(bball_clean<span class="sc">$</span><span class="st">`</span><span class="at">Salary S</span><span class="st">`</span> <span class="sc">&lt;=</span> perc_67, <span class="st">"Medium"</span>, <span class="st">"High"</span>))</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(bball_clean[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Player</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: left;">Tm</th>
+<th style="text-align: right;">G</th>
+<th style="text-align: right;">GS</th>
+<th style="text-align: right;">C</th>
+<th style="text-align: right;">PF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Precious Achiuwa</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">TOR</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Steven Adams</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: left;">MEM</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bam Adebayo</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: left;">MIA</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ochai Agbaji</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: left;">UTA</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Santi Aldama</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: left;">MEM</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nickeil Alexander-Walker</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">MIN</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="put-solution-here" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here">Put solution here</h3>
+
+</section>
+</section>
+<section id="exercise-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2">EXERCISE 2</h2>
+<p>We realize that we need to account for position. We need to do this because player position is a likely confounding variable that affects performance as players on the court have distinct responsibilities. Thus, we can also see how the position of the player influences salary bin.</p>
+<p>In the chunk below, transform the Position column so that each position is now represented numerically (1 through 5, associated with the proper position: 1 is PG, 2 is SG, 3 is SF, 4 is PF, and 5 is C). Pay close attention to how the data is currently represented. A proper implementation will have a single variable called “Position”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#assigns positional values for each position. Specifically,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#1 for Point Guard, 2 for Shooting Guard, 3 for small</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#forward, 4 for power forward, and 5 for center.</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>bball_clean<span class="sc">$</span>Position <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  bball_clean<span class="sc">$</span>PG <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  bball_clean<span class="sc">$</span>SG <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  bball_clean<span class="sc">$</span>SF <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  bball_clean<span class="sc">$</span>PF <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  bball_clean<span class="sc">$</span>C <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Which position in basketball (PG, SG, SF, PF, or C) do you think gets paid the most? Why?</p>
+<section id="put-solution-here-1" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here-1">Put solution here</h3>
+<p>We must now filter the Basketball Clean data frame so that it only includes players who are 25 and older. This is important because the rookie salary is calibrated differently and most rookies are under the age of 25.</p>
+<p>Keep in mind that filtering for ages greater than 25 decreases the number of observations in the data set. Before you do this, you need to make sure you still have enough data to create a good model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bball_clean <span class="ot">&lt;-</span> bball_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">25</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">nrow</span>(bball_clean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 675</code></pre>
+</div>
+</div>
+<p>Based on our intuition, 675 is still enough observations to conduct a sound analysis. However, to determine the lowest number of observations one can have in a dataset and still conduct ordinal logistic regression would depend on a power analysis. While power analysis is outside of the scope of this module, it is essentially a minimum sample size requirement test based on the desired level of statistical power that one seeks in conducting their statistical model. We thus conclude that 675 is enough data to create a good Ordinal Logistic Regression model.</p>
+<p>Let’s check our work and now visualize the data!</p>
+</section>
+</section>
+<section id="exercise-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3">EXERCISE 3</h2>
+<p>Using the data frame, create the visualizations as instructed.</p>
+<p>First, create a barplot showing how many players are considered to be low, medium, or high.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>sal_bin_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(bball_clean<span class="sc">$</span>sal_bin)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(sal_bin_counts,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Counts of Salary Bins"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Salary Bin"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Next, let’s take a look at the distribution of NBA salaries to see if we have normality. Create a histogram representing the distribution of salaries in the NBA data. Also, determine the maximum salary of any player in the dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Salary S</span><span class="st">`</span>), <span class="at">data =</span> bball_clean) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">'gold'</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of NBA Salaries"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Salary"</span>, <span class="at">y =</span><span class="st">"Number of Players"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>highest_value <span class="ot">&lt;-</span> <span class="fu">max</span>(bball_clean<span class="sc">$</span><span class="st">`</span><span class="at">Salary S</span><span class="st">`</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>highest_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 51.91562</code></pre>
+</div>
+</div>
+<p>Notice that there is a skew in the salaries, with a majority of players having a salary of approximately 2-6 million while other players have salaries upwards of 50 million. As you see, the highest salary in the dataset is 51.92 million. WOW! We need to take these specific findings into account when we later consider the validity conditions of our ordinal logistic regression model.</p>
+</section>
+<section id="exercise-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4">EXERCISE 4</h2>
+<p>We are now curious about looking further at the relationship between Field Goals made per game versus salary. This is something we will examine below.</p>
+<p>Create a scatter plot showing the relationship between points per game and salary. Add a line to it using geom_smooth(). Also, find out the maximum points per game of all players in the dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bball_clean, <span class="fu">aes</span>(<span class="at">x =</span> PTS_per_game, <span class="at">y =</span> <span class="st">`</span><span class="at">Salary S</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Points per Game"</span>, <span class="at">y =</span> <span class="st">"Salary"</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Scatterplot of Points per Game vs. Salary"</span>) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>highest_value <span class="ot">&lt;-</span> <span class="fu">max</span>(bball_clean<span class="sc">$</span>PTS_per_game)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>highest_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 33.1</code></pre>
+</div>
+</div>
+<section id="put-solution-here-2" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here-2">Put solution here</h3>
+<p>Based on the visualization above, what do you think geom_smooth() does?</p>
+</section>
+<section id="put-solution-here-3" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here-3">Put solution here</h3>
+<p>Now, for the final bit of data cleaning.</p>
+<p>We now must turn the “low”, “medium”, and “high” values into factors (1,2,3) as this numerical encoding is needed for Ordinal Logistic Regression to work.</p>
+</section>
+</section>
+<section id="exercise-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5">EXERCISE 5</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the response (sal_bin) into a factor (1, 2, 3)</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>bball_clean<span class="sc">$</span>sal_bin <span class="ot">&lt;-</span> <span class="fu">factor</span>(bball_clean<span class="sc">$</span>sal_bin, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Medium"</span>, <span class="st">"High"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s Recap: so far, you’ve cleaned the data and visualized it. But aren’t we doing Ordinal Logistic Regression? Of course! Below is your opportunity to fit an OLR model to the data you’ve cleaned and visualized. Let’s get started.</p>
+</section>
+</section>
+<section id="methods-and-instructional-content" class="level1">
+<h1>METHODS AND INSTRUCTIONAL CONTENT</h1>
+<section id="what-is-ordinal-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-ordinal-logistic-regression">What Is Ordinal Logistic Regression?</h2>
+<p>First, let’s get a deeper understanding of OLR and point you to some resources that might make it make a bit more sense. We will first provide two sources that help us to better understand OLR. We recommend that you access these sources if you seek to do a “deeper dive” into learning the theoretical aspects of OLR.</p>
+<p>Cornell University Statistical Consulting Unit:<br>
+Just as we can do in logistic regression, ordinal logistic regression (OLR) allows us to make predicted probabilities with just a slightly altered formula for doing so. This source shows readers how to interpret OLR coefficients which is often described as “cumbersome.”</p>
+<p>By understanding how to interpret the coefficients as well as model predicted probabilities of an OLR model, we help students gain insight into a not-often taught technique. The factors that influence the ordinal response variable (salary bin) may also be able to get students motivated to view the NBA from a statistically-driven mindset.</p>
+</section>
+<section id="real-world-application-of-ordinal-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="real-world-application-of-ordinal-logistic-regression">Real World Application of Ordinal Logistic Regression</h2>
+<p>UCLA Statistical Methods and Data Analytics:<br>
+OLR is easily represented in real-world examples. For example, what factors contribute to whether someone orders a small, medium, or large french fry from the drive-thru? In many situations, people picture their decision-making processes ordinally. The biggest take-away from this source is how massive the application of OLR really is.</p>
+</section>
+<section id="mathematical-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-formulation">Mathematical Formulation</h2>
+<p>The equation for Ordinal Logistic Regression is defined as:</p>
+<p><span class="math display">\[ \text{logit}(P(Y \leq j)) = \alpha_j + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p \]</span> Let’s break down the model above in its individual components.</p>
+<ul>
+<li><p>( Y ): The dependent variable, representing the ordinal response variable. This is specifically the salary bin of NBA players.</p></li>
+<li><p>( P(Y j) ): The probability of the dependent variable ( Y ) being less than or equal to category ( j ).</p></li>
+<li><p>( (P(Y j)) ): The log odds of the dependent variable ( Y ) being less than or equal to category ( j ).</p></li>
+<li><p>( _j ): The intercept parameter associated with category ( j ).</p></li>
+<li><p>( _1, _2, , _p ): The coefficients associated with the independent variables ( x_1, x_2, , x_p ) respectively.</p></li>
+<li><p>( x_1, x_2, , x_p ): The independent variables, representing the characteristics or attributes that influence the ordinal response variable ( Y ). This includes player stats we are looking to use in order to “predict” the salary bin.</p></li>
+</ul>
+<p>Thus, the odds of being less than or equal a particular category is defined as:</p>
+<p><span class="math display">\[ \frac{P(Y \leq j)}{P(Y &gt; j)}\]</span></p>
+<p>Below is another mathematical definition of OLR.</p>
+<p><span class="math display">\[ \log \left( \frac{P(Y \leq j)}{P(Y &gt; j)} \right) = logit(P(Y \leq j)\]</span></p>
+</section>
+<section id="assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions">Assumptions</h2>
+<p>There are several key assumptions in Ordinal Logistic Regression. The first is the proportional odds assumption, which states that the relationship between each pair of outcome categories is consistent across all levels of the independent variables. Put more simply, the odds of being in a higher category versus a lower category must be constant across different levels of the independent variables. For example, this assumption would be violated if most players had a lower salary (which we see is somewhat true but does not make a major impact on our analysis here). Second, our observations must be independent of one another. This could potentially be violated as someone’s team might have more money and certain groups of players (think teams) could potentially be clustered and dependent on one another. To combat this in a more advanced module, one might look into conducting clustered ordinal logistic regression to account for this potentially dependent structure of the data. Next, linearity of logit. OLR assumes that the relationship between independent variables and the log odds of the outcome categories is linear.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>There are a few limitations of OLR worth mentioning.Firstly, it can be hard to interpret the coefficients from our model. For example, understanding how each predictor influences salary categories can be challenging. Thus, analysts or even team managers might not be able to use this model to make acionable decisions and should thus stick to other methods. Our model also assumes a linear relationship between predictors (player stats) and salary categories. However, this is not always a linear relationship which can thus lead to predictions of the model not being as accurate. Also, given the nature of the multiple categories we are trying to predict, OLR needs a lot of data to make accurate guesses about how player statistics relate to salaries. Thus, OLR models can only be used on larger datasets like the one we have here, which may not always be available. Finally, we acknowledge that our independence assumption is likely violated as different teams have less (or more) money to pay their players. Thus, the dependency among players within the same team violates the independence assumption and could impact our model’s estimates. One option for solving this is conducting clustered Ordinal Logistic Regression, which thus accounts for the dependence of observations between clusters (teams here). This extends beyond the scope of our module but is worthy of investigation.</p>
+</section>
+<section id="why-ordinal-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="why-ordinal-logistic-regression">Why Ordinal Logistic Regression?</h2>
+<p>Why use OLR in the first place? You may have heard that Logistic Regression (LR) is one of the most popular models in statistics because of its use of a binary response variable. What might be an advantage of OLR compared to simple LR? What might be something that we need to be careful of in constructing our model (Hint, think number of bins)?</p>
+<section id="put-solution-here-4" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here-4">Put solution here</h3>
+
+</section>
+</section>
+<section id="fitting-the-ordinal-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-the-ordinal-logistic-regression">Fitting the Ordinal Logistic Regression</h2>
+<p>Now, it’s time to fit the model.</p>
+<p>Below, we will fit an ordinal logistic regression model (m) which predicts salary bins based on various basketball player statistics and demographic factors we seek to account for. These include games, player, starts, field goals per game, three pointers per game, steals per game, blocks per game, age, total points per game, total points, and player position. We can also see the results of the fitted model below using the summary() command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">polr</span>(sal_bin <span class="sc">~</span> G <span class="sc">+</span> GS <span class="sc">+</span> FG_per_game <span class="sc">+</span> <span class="st">`</span><span class="at">3P_per_game</span><span class="st">`</span> <span class="sc">+</span> STL_per_game <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>            BLK_per_game <span class="sc">+</span> Age <span class="sc">+</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>            PTS_per_game <span class="sc">+</span> PTS_totals <span class="sc">+</span> Position, <span class="at">data =</span> bball_clean, <span class="at">Hess=</span><span class="cn">TRUE</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+polr(formula = sal_bin ~ G + GS + FG_per_game + `3P_per_game` + 
+    STL_per_game + BLK_per_game + Age + PTS_per_game + PTS_totals + 
+    Position, data = bball_clean, Hess = TRUE)
+
+Coefficients:
+                   Value Std. Error t value
+G             -0.0063442   0.010756 -0.5898
+GS             0.0209252   0.005689  3.6779
+FG_per_game   -0.3041243   0.466109 -0.6525
+`3P_per_game`  0.4171175   0.226359  1.8427
+STL_per_game   0.8203322   0.335475  2.4453
+BLK_per_game   0.6404837   0.359232  1.7829
+Age            0.1601774   0.029646  5.4030
+PTS_per_game   0.3767512   0.203729  1.8493
+PTS_totals     0.0009817   0.001298  0.7566
+Position       0.1478555   0.088574  1.6693
+
+Intercepts:
+    Value   Std. Error t value
+1|2  7.5413  1.0822     6.9684
+2|3 10.2370  1.1335     9.0309
+
+Residual Deviance: 831.2854 
+AIC: 855.2854 </code></pre>
+</div>
+</div>
+<p>We see that games started and age have significant positive associations with higher salaries per game, while variables like field goals per game, three pointers per game, steals per game, and player position do not show statistically significant associations with salary bins.</p>
+<p>How should you interpret the OLR model? Each coefficient seen from the summary is the effect size on the log odds of being in a higher salary category. For instance, the Age coefficient of 0.160 suggests that for players older than 25, as the age of the player increases by one year, the log odds of being in a higher salary category increases by .16, holding all other variables constant.</p>
+<p>In OLR, the intercepts are where we divide the categories. Their associated values indicate the log odds of being in or above the category when all predictors are zero. The AIC, or Akaike Information Criterion, is used for determining how well a model fits the data from which it was generated. In other words, the AIC helps answer the question of whether the OLR model make sense for the basketball data, and does it work for the bins into which we’ve separated player salaries?</p>
+<p>We will now calculate p-values for each coefficient in the ordinal logistic regression model which will allow us another metric for understanding statistical significance. We then will construct confidence intervals for the coefficients evaluated.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the coefficients table from the summary of model 'm'</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>ctable <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(m))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the p-values for the coefficients based on their t-values</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 'pnorm' is used for the normal distribution, 'lower.tail = FALSE' calculates the upper tail,</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and multiplying by 2 performs a two-tailed test</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(ctable[, <span class="st">"t value"</span>]), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the p-values as a new column to the coefficients table</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>ctable <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ctable, <span class="st">"p value"</span> <span class="ot">=</span> p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">confint</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting for profiling to be done...</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table from 'ctable' using 'kable()' for better formatting in markdown or HTML outputs</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>ctable <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Value</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">t value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">-0.0063442</td>
+<td style="text-align: right;">0.0107563</td>
+<td style="text-align: right;">-0.5898120</td>
+<td style="text-align: right;">0.5553167</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GS</td>
+<td style="text-align: right;">0.0209252</td>
+<td style="text-align: right;">0.0056895</td>
+<td style="text-align: right;">3.6778764</td>
+<td style="text-align: right;">0.0002352</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FG_per_game</td>
+<td style="text-align: right;">-0.3041243</td>
+<td style="text-align: right;">0.4661087</td>
+<td style="text-align: right;">-0.6524752</td>
+<td style="text-align: right;">0.5140947</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>3P_per_game</code></td>
+<td style="text-align: right;">0.4171175</td>
+<td style="text-align: right;">0.2263586</td>
+<td style="text-align: right;">1.8427287</td>
+<td style="text-align: right;">0.0653686</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STL_per_game</td>
+<td style="text-align: right;">0.8203322</td>
+<td style="text-align: right;">0.3354755</td>
+<td style="text-align: right;">2.4452822</td>
+<td style="text-align: right;">0.0144739</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLK_per_game</td>
+<td style="text-align: right;">0.6404837</td>
+<td style="text-align: right;">0.3592316</td>
+<td style="text-align: right;">1.7829269</td>
+<td style="text-align: right;">0.0745982</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">0.1601774</td>
+<td style="text-align: right;">0.0296460</td>
+<td style="text-align: right;">5.4030018</td>
+<td style="text-align: right;">0.0000001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTS_per_game</td>
+<td style="text-align: right;">0.3767512</td>
+<td style="text-align: right;">0.2037294</td>
+<td style="text-align: right;">1.8492729</td>
+<td style="text-align: right;">0.0644184</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTS_totals</td>
+<td style="text-align: right;">0.0009817</td>
+<td style="text-align: right;">0.0012976</td>
+<td style="text-align: right;">0.7565778</td>
+<td style="text-align: right;">0.4493029</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Position</td>
+<td style="text-align: right;">0.1478555</td>
+<td style="text-align: right;">0.0885738</td>
+<td style="text-align: right;">1.6692910</td>
+<td style="text-align: right;">0.0950597</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1|2</td>
+<td style="text-align: right;">7.5413203</td>
+<td style="text-align: right;">1.0822099</td>
+<td style="text-align: right;">6.9684451</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2|3</td>
+<td style="text-align: right;">10.2369674</td>
+<td style="text-align: right;">1.1335427</td>
+<td style="text-align: right;">9.0309500</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this line creates a table from 'ci' using 'kable()' for clear and formatted display</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>ci <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">2.5 %</th>
+<th style="text-align: right;">97.5 %</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">-0.0286733</td>
+<td style="text-align: right;">0.0163989</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GS</td>
+<td style="text-align: right;">0.0098741</td>
+<td style="text-align: right;">0.0320792</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FG_per_game</td>
+<td style="text-align: right;">-1.2274034</td>
+<td style="text-align: right;">0.5989024</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>3P_per_game</code></td>
+<td style="text-align: right;">-0.0265410</td>
+<td style="text-align: right;">0.8602507</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STL_per_game</td>
+<td style="text-align: right;">0.1650309</td>
+<td style="text-align: right;">1.4831029</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLK_per_game</td>
+<td style="text-align: right;">-0.0463513</td>
+<td style="text-align: right;">1.3611710</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">0.1025227</td>
+<td style="text-align: right;">0.2190911</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTS_per_game</td>
+<td style="text-align: right;">-0.0138302</td>
+<td style="text-align: right;">0.7789011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTS_totals</td>
+<td style="text-align: right;">-0.0017483</td>
+<td style="text-align: right;">0.0037230</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Position</td>
+<td style="text-align: right;">-0.0252025</td>
+<td style="text-align: right;">0.3223810</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We notice that the variables ‘games started’ and ‘age’ have statistically significant effects on the ordinal response variable, as they have low p-values and their confidence intervals do not cross zero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficients and confidence intervals</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>coef_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">rownames</span>(ci),</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Coef =</span> <span class="fu">coef</span>(m),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">CI_low =</span> ci[,<span class="dv">1</span>],</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">CI_high =</span> ci[,<span class="dv">2</span>]</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create forest plot</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coef_df, <span class="fu">aes</span>(<span class="at">x =</span> Coef, <span class="at">y =</span> Variable)) <span class="sc">+</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> CI_low, <span class="at">xmax =</span> CI_high), <span class="at">height =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Coefficients and 95% Confidence Intervals"</span>,</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Coefficient"</span>,</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Variable"</span>) <span class="sc">+</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Above we visualize the coefficients and their 95 percent confidence intervals. We see that the variables which do not overlap with zero are significant. This graph allows for a quick understanding of the direction of impact of variables and their significance for someone who does not have an understanding of statistics.</p>
+<p>Finally, let’s assess our model’s accuracy. How did our model do compared to the baseline accuracy of the model?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the predict function to get predicted categories from the</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">#model 'm' using new data 'bball_clean'. The 'type = "class"' argument </span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co">#specifies that the prediction should be categorical (class labels)</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>predicted_categories <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, bball_clean, <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a confusion matrix comparing the predicted categories </span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co">#to the actual categories in 'bball_clean$sal_bin'</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 'confusionMatrix' is typically from the 'caret' </span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co">#package, which provides detailed accuracy measures and other statistics</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> predicted_categories, <span class="at">reference =</span> bball_clean<span class="sc">$</span>sal_bin)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the 'Accuracy' element from the overall results of the confusion matrix</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> conf_matrix<span class="sc">$</span>overall[<span class="st">'Accuracy'</span>]</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Output the accuracy</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>accuracy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Accuracy 
+0.7274074 </code></pre>
+</div>
+</div>
+<section id="put-solution-here-5" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here-5">Put solution here</h3>
+
+</section>
+</section>
+<section id="exercise-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6">EXERCISE 6</h2>
+<p>Let’s see how good our model is at predicting individual player salary bins. In this exercise, we’ll give you an individual player’s name. Then, you’ll make an initial guess as to which bin they’ll fall in. This initial guess should be based on the following variables: games, games started, field goals per game, age, and points per game. Finally, we’ll compare your guess to the model’s prediction.</p>
+<p>First, we need to make a more simple model that considers only the variables we outlined above. There are several implications to doing this. First, it will make the model less viable. We recommend keeping it with as many variables as the original model that was built above. Also, it may significantly alter the odds of a player being in a particular bin.</p>
+<p>This exercise is more for allowing you to build your own model, then using it for a fun exercise. Enjoy!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>new_m <span class="ot">&lt;-</span> <span class="fu">polr</span>(sal_bin <span class="sc">~</span> G <span class="sc">+</span> GS <span class="sc">+</span> FG_per_game <span class="sc">+</span> Age <span class="sc">+</span> PTS_per_game,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> bball_clean, <span class="at">Hess =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use this code to see how your prediction and the model's prediction compared to reality!</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># bball_clean %&gt;% filter(Player == "Player Name") %&gt;% </span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(Player, sal_bin) %&gt;% kable()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="player-1-lebron-james" class="level1">
+<h1>PLAYER 1: LeBron James</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First, make a data frame with only LeBron's information (within the clean data frame)</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>lebron_df <span class="ot">&lt;-</span> bball_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"LeBron James"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(G, GS, FG_per_game, Age, PTS_per_game)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Output the table</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>lebron_df <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">G</th>
+<th style="text-align: right;">GS</th>
+<th style="text-align: right;">FG_per_game</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">PTS_per_game</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">28.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">30.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">25.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Make your prediction below!</p>
+<section id="put-solution-here-6" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here-6">Put solution here</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>lebron_prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(new_m, <span class="at">newdata =</span> lebron_df, <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>lebron_prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 3 3
+Levels: 1 2 3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Your Work</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>bball_clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"LeBron James"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Player, sal_bin) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Player</th>
+<th style="text-align: left;">sal_bin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">LeBron James</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LeBron James</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LeBron James</td>
+<td style="text-align: left;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Notice that the model here predicted completely correct for each of Lebron’s stints!</p>
+</section>
+</section>
+<section id="player-2-nicolas-batum" class="level1">
+<h1>PLAYER 2: Nicolas Batum</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First, make a data frame with only Batum's information (within the clean data frame)</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>batum_df <span class="ot">&lt;-</span> bball_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Nicolas Batum"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(G, GS, FG_per_game, Age, PTS_per_game)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Output the table</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>batum_df <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">G</th>
+<th style="text-align: right;">GS</th>
+<th style="text-align: right;">FG_per_game</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">PTS_per_game</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">6.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">8.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">8.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Make your prediction below!</p>
+<section id="put-solution-here-7" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here-7">Put solution here</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>batum_prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(new_m, <span class="at">newdata =</span> batum_df, <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>batum_prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3 3
+Levels: 1 2 3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Your Work</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>bball_clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Nicolas Batum"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Player, sal_bin) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Player</th>
+<th style="text-align: left;">sal_bin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Nicolas Batum</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nicolas Batum</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nicolas Batum</td>
+<td style="text-align: left;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We see that our model predicted two out of the three correct, predicting medium instead of high salary for one of the stints. Pretty good!</p>
+</section>
+</section>
+<section id="player-3-justin-jackson" class="level1">
+<h1>PLAYER 3: Justin Jackson</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First, make a data frame with only Jackson's information (within the clean data frame)</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>jackson_df <span class="ot">&lt;-</span> bball_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Justin Jackson"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(G, GS, FG_per_game, Age, PTS_per_game)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Output the table</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>jackson_df <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">G</th>
+<th style="text-align: right;">GS</th>
+<th style="text-align: right;">FG_per_game</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">PTS_per_game</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">7.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Make your prediction below!</p>
+<section id="put-solution-here-8" class="level3">
+<h3 class="anchored" data-anchor-id="put-solution-here-8">Put solution here</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>jackson_prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(new_m, <span class="at">newdata =</span> jackson_df, <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>jackson_prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 1
+Levels: 1 2 3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Your Work</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>bball_clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Justin Jackson"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Player, sal_bin) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Player</th>
+<th style="text-align: left;">sal_bin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Justin Jackson</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Justin Jackson</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We see again that our model corrected both stints correctly!</p>
+</section>
+</section>
+<section id="player-4-seth-curry" class="level1">
+<h1>PLAYER 4: Seth Curry</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First, make a data frame with only Jackson's information (within the clean data frame)</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>curry_df <span class="ot">&lt;-</span> bball_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Seth Curry"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(G, GS, FG_per_game, Age, PTS_per_game)</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Output the table</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>curry_df <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">G</th>
+<th style="text-align: right;">GS</th>
+<th style="text-align: right;">FG_per_game</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">PTS_per_game</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">9.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">15.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">12.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Make your prediction below! ### Put solution here</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Code Here</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>curry_prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(new_m, <span class="at">newdata =</span> curry_df, <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>curry_prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3 3
+Levels: 1 2 3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Your Work</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>bball_clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Seth Curry"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Player, sal_bin) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Player</th>
+<th style="text-align: left;">sal_bin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Seth Curry</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seth Curry</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seth Curry</td>
+<td style="text-align: left;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We see here that our model struggled when predicting the middle category here. The model predicted that Seth Curry had a high salary for two of the stints when in reality he was medium.</p>
+<p>Well done! You are now able to do OLR in R. In the future, keep in mind the various considerations when fitting a model, cleaning the data, and visualizing it.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>CONCLUSION</h1>
+<section id="learning-goals-revisited" class="level2">
+<h2 class="anchored" data-anchor-id="learning-goals-revisited">Learning Goals, Revisited</h2>
+<p>Alright folks, let’s get back into the learning goals and talk through exactly what we did in this module to address them! Our module specifically introduced Ordinal Logistic Regression to predict NBA Salary Bin with the below learning modules, recapped.</p>
+<ol type="1">
+<li>Understand how Ordinal Logistic Regression will be applied to an NBA data set and predicting NBA salary.</li>
+</ol>
+<ul>
+<li>You’ve successfully applied ordinal logistic regression to predict NBA player salaries, addressing the unique challenges and considerations of this sports context.</li>
+</ul>
+<ol start="2" type="1">
+<li>Understand the Theory and Application of Ordinal Logistic Regression (OLR).</li>
+</ol>
+<ul>
+<li>Through reading explanations, coding, and creating visualizations, you now understand the theory behind OLR and its practical application in predicting salary bins.</li>
+</ul>
+<ol start="3" type="1">
+<li>Prepare data for OLR.</li>
+</ol>
+<ul>
+<li>You’ve data cleaned and preprocessed data necessary to prepare the NBA data set for OLR, ensuring its suitability for analysis.</li>
+</ul>
+<ol start="4" type="1">
+<li>Construct an OLR model in R using relevant variables from an NBA data set.</li>
+</ol>
+<ul>
+<li>You’ve constructed and fitted an OLR model using key variables such as games played, age, positions, and performance metrics.</li>
+</ul>
+<ol start="5" type="1">
+<li>Interpret OLR model coefficients and their implications for predicting NBA salary.</li>
+</ol>
+<ul>
+<li>You’ve interpreted the coefficients of the OLR model, now understanding their significance and impact on predicting salary bins.</li>
+</ul>
+<ol start="6" type="1">
+<li>Apply OLR to predict salary and evaluate your model’s performance.</li>
+</ol>
+<ul>
+<li>You’ve evaluated the model’s performance through measures like accuracy and provided insights into its effectiveness in predicting NBA player salaries.</li>
+</ul>
+</section>
+<section id="wrap-up-and-future-directions" class="level2">
+<h2 class="anchored" data-anchor-id="wrap-up-and-future-directions">Wrap Up and Future Directions</h2>
+<p>To expand on this skill and apply OLR in other areas, you might do the following:</p>
+<section id="further-model-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="further-model-evaluation">Further Model evaluation</h3>
+<p>To further evaluate the model, you might look into ROC curves or precision-recall curves, thus giving us a more nuanced understanding of our model’s strengths and weaknesses.</p>
+</section>
+<section id="future-analysis-in-other-areas" class="level3">
+<h3 class="anchored" data-anchor-id="future-analysis-in-other-areas">Future Analysis in Other Areas</h3>
+<p>Since we’re interested in applying this in sports, you might want to look into gaining an edge by applying OLR to your fantasy sports league to forecast player performance. This could help you to identify undervalued players and inform strategic decisions such as making trades and picking up free agents. OLR would specifically be used in creating player ranking systems, player valuation systems, and even binning the value of players in terms of season long term projections. To best illustrate how this approach could be used in another elementary (non sports) situation, consider the question, “What fast food order at McDonalds is most likely to result in the customer ordering a”small”, “medium,” or “large” drink? We could thus collect data on different types of McDonalds orders and have our dependent variable be the “bin” of the type of drink ordered. Going back to sports, we could also use Ordinal Logistic Regression to answer the question, “What offensive line configurations are more likely to result in more running yards? Thus, we could bin certain amounts of”yards gained” or places on the field that the play gets to (for example: 20,40,60) as the dependent variable whereas the independent variable includes various offensive line configurations.</p>
+</section>
+<section id="related-concepts-and-skills" class="level3">
+<h3 class="anchored" data-anchor-id="related-concepts-and-skills">Related Concepts and Skills</h3>
+<p>If one is looking to learn related concepts and skills, we would recommend investigating the following types of modules shown below:</p>
+<section id="machine-learning-algorithms" class="level4">
+<h4 class="anchored" data-anchor-id="machine-learning-algorithms">Machine Learning Algorithms</h4>
+<p>This includes using decision trees, random forests, vector machines, and even neural networks which can allow for creating more flexible models than in Ordinal Logistic Regression. This would be best especially for optimizing one’s fantasy sports league.</p>
+</section>
+<section id="linear-regression" class="level4">
+<h4 class="anchored" data-anchor-id="linear-regression">Linear Regression</h4>
+<p>Here, we dealt with binned data. If someone wanted to try and predict a numerical response variable, we recommend starting with learning Linear Regression if it is not already understood.</p>
+<p>Thanks for tuning in!</p>
+</section>
+</section>
+</section>
+</section>
+<section id="works-cited" class="level1">
+<h1>Works Cited:</h1>
+<p>Subramanyasmgm. “Multinomial Logistic Regression in R.” GeeksforGeeks, 9 June 2023, https://www.geeksforgeeks.org/multinomial-logistic-regression-in-r/.</p>
+<p>Pastorello, Gabriel. “Predicting NBA Salaries with Machine Learning.” Towards Data Science, Aug 24, 2023, https://towardsdatascience.com/predicting-nba-salaries-with-machine-learning-e6ef8d62b40c.</p>
+<p>“NBA.com/Stats Frequently Asked Questions.” NBA.com, NBA Media Ventures, LLC, www.nba.com/stats/help-faq/.</p>
+</section>
+<section id="assignment-citations" class="level1">
+<h1>Assignment Citations:</h1>
+<p>Chat GPT, Open AI 4. Chat GPT assisted us in three major areas. Firstly, Chat assisted in the methodology section with properly formatting the Latex, as it originally was producing errors. Second, Chat assisted Cadet Chauff in writing out the explanations of the meanings of the variables, as Cadet Chauff did not know what some of the variables were and needed to understand this before explaining to the reader. Finally, Chat assisted in the creation of the confidence interval code, as this was not an area we specifically covered in the Lesson Code in class. West Point, NY. May 9th, 2024.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Maintained by All of Us! <br> We use cookies to track usage statistics to help measure impact of the materials for authors. Please consider allowing tracking cookies.</p>
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Manage cookies</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
