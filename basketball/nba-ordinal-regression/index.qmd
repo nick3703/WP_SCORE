@@ -13,9 +13,8 @@ description: "An Introduction to Ordinal Regression Using Basketball"
 editor: 
   canonical: true
 categories:
-  - Logistic Regression 
-  - Decision Trees
-  - Gini index
+  - Ordinal Regression
+
 ---
 
 Solutions to this module are available [here](https://github.com/nick3703/WP_SCORE/raw/main/basketball/nba-ordinal-regression/NBA-Ordinal-Regression-Solutions.pdf)
