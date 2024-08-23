@@ -11,35 +11,28 @@
     ]
   },
   {
-    "objectID": "BlackJack/BlackJack_Log_Reg/index.html",
-    "href": "BlackJack/BlackJack_Log_Reg/index.html",
-    "title": "BlackJack Logistic Regression",
+    "objectID": "Lacrosse/expected_goals/index.html",
+    "href": "Lacrosse/expected_goals/index.html",
+    "title": "Expected Goals in Lacrosse",
     "section": "",
-    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform BlackJack Module",
+    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Lacrosse Module",
     "crumbs": [
       "Home",
-      "BlackJack",
-      "BlackJack Logistic Regression"
+      "Lacrosse",
+      "Expected Goals in Lacrosse"
     ]
   },
   {
-    "objectID": "BlackJack/BlackJack_Log_Reg/index.html#module",
-    "href": "BlackJack/BlackJack_Log_Reg/index.html#module",
-    "title": "BlackJack Logistic Regression",
+    "objectID": "Lacrosse/expected_goals/index.html#module",
+    "href": "Lacrosse/expected_goals/index.html#module",
+    "title": "Expected Goals in Lacrosse",
     "section": "",
-    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform BlackJack Module",
+    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Lacrosse Module",
     "crumbs": [
       "Home",
-      "BlackJack",
-      "BlackJack Logistic Regression"
+      "Lacrosse",
+      "Expected Goals in Lacrosse"
     ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "West Point SCORE Module Pre-print Repository",
-    "section": "",
-    "text": "This page contains education materials for the SCORE Network that were created by faculty and students from the Department of Mathematical Sciences at West Point.\nThe SCORE Network Module Repository enables you to search for modules by either sport (along the left), or you can browse by statistics and data science topic.\n\n\n\n\n\n\nDisclaimer\n\n\n\n\n\nPlease note that these material have not yet completed the required pedagogical and industry peer reviews to become a published module on the SCORE Network.\nHowever, all modules listed under their respective sports have been reviewed by a St. Lawrence University statistics instructor and are able for others to use.\nModules posted in the “Early Drafts” tab have not yet been fully vetted by an statistics/data science instructor. Instructors are welcome to use them, but should expect to make modifications to the materials.\n\n\n\nThe development of the SCORE with Data network is funded by the National Science Foundation (award 2142705).\n\n\n\n\n\n\nContributing and/or Joining the SCORE Network\n\n\n\n\n\n\nIf you are interested in contributing to and/or joining the SCORE Network, please check out https://scorenetwork.org/index.html.\nThis page was based off of the work done by https://github.com/iramler/slu_score_preprints.\nThe basic structure of the this repository is to have a directory for each sport, then within the sport, each module will have a folder containing its files. We have found that this allows us to easily submit a module in this repository to the SCORE Network and requires only minimal work for preparing it for the SCORE module repository after it is accepted."
   },
   {
     "objectID": "_team.html",
@@ -75,6 +68,37 @@
     ]
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "West Point SCORE Module Pre-print Repository",
+    "section": "",
+    "text": "This page contains education materials for the SCORE Network that were created by faculty and students from the Department of Mathematical Sciences at West Point.\nThe SCORE Network Module Repository enables you to search for modules by either sport (along the left), or you can browse by statistics and data science topic.\n\n\n\n\n\n\nDisclaimer\n\n\n\n\n\nPlease note that these material have not yet completed the required pedagogical and industry peer reviews to become a published module on the SCORE Network.\nHowever, all modules listed under their respective sports have been reviewed by a St. Lawrence University statistics instructor and are able for others to use.\nModules posted in the “Early Drafts” tab have not yet been fully vetted by an statistics/data science instructor. Instructors are welcome to use them, but should expect to make modifications to the materials.\n\n\n\nThe development of the SCORE with Data network is funded by the National Science Foundation (award 2142705).\n\n\n\n\n\n\nContributing and/or Joining the SCORE Network\n\n\n\n\n\n\nIf you are interested in contributing to and/or joining the SCORE Network, please check out https://scorenetwork.org/index.html.\nThis page was based off of the work done by https://github.com/iramler/slu_score_preprints.\nThe basic structure of the this repository is to have a directory for each sport, then within the sport, each module will have a folder containing its files. We have found that this allows us to easily submit a module in this repository to the SCORE Network and requires only minimal work for preparing it for the SCORE module repository after it is accepted."
+  },
+  {
+    "objectID": "BlackJack/BlackJack_Log_Reg/index.html",
+    "href": "BlackJack/BlackJack_Log_Reg/index.html",
+    "title": "BlackJack Logistic Regression",
+    "section": "",
+    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform BlackJack Module",
+    "crumbs": [
+      "Home",
+      "BlackJack",
+      "BlackJack Logistic Regression"
+    ]
+  },
+  {
+    "objectID": "BlackJack/BlackJack_Log_Reg/index.html#module",
+    "href": "BlackJack/BlackJack_Log_Reg/index.html#module",
+    "title": "BlackJack Logistic Regression",
+    "section": "",
+    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform BlackJack Module",
+    "crumbs": [
+      "Home",
+      "BlackJack",
+      "BlackJack Logistic Regression"
+    ]
+  },
+  {
     "objectID": "obstacle_courses/West_Point_Indoor_Obstacle_Course/index.html",
     "href": "obstacle_courses/West_Point_Indoor_Obstacle_Course/index.html",
     "title": "Indoor Obstacle Course Test",
@@ -96,30 +120,6 @@
       "Home",
       "Obstacle Courses",
       "Indoor Obstacle Course Test"
-    ]
-  },
-  {
-    "objectID": "Lacrosse/expected_goals/index.html",
-    "href": "Lacrosse/expected_goals/index.html",
-    "title": "Expected Goals in Lacrosse",
-    "section": "",
-    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Lacrosse Module",
-    "crumbs": [
-      "Home",
-      "Lacrosse",
-      "Expected Goals in Lacrosse"
-    ]
-  },
-  {
-    "objectID": "Lacrosse/expected_goals/index.html#module",
-    "href": "Lacrosse/expected_goals/index.html#module",
-    "title": "Expected Goals in Lacrosse",
-    "section": "",
-    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Lacrosse Module",
-    "crumbs": [
-      "Home",
-      "Lacrosse",
-      "Expected Goals in Lacrosse"
     ]
   }
 ]
