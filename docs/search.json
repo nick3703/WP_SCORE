@@ -4,7 +4,7 @@
     "href": "by-statsds-topic.html",
     "title": "Modules By Topic",
     "section": "",
-    "text": "BlackJack Logistic Regression\n\n\n\n\n\n\nLogistic Regression\n\n\nBinary Data\n\n\n\nAn Introduction to Logistic Regression Using BlackJack\n\n\n\n\n\nJul 1, 2024\n\n\nAndrew Tran, Nicholas Clark\n\n\n\n\n\n\n\n\n\n\n\n\nExpected Goals in Lacrosse\n\n\n\n\n\n\nLogistic Regression\n\n\nDecision Trees\n\n\nGini index\n\n\n\nAn Introduction to Expected Goals Using Lacrosse\n\n\n\n\n\nJul 1, 2024\n\n\nRyan Sellew, Andrew Lee\n\n\n\n\n\n\n\n\n\n\n\n\nExpected Goals in Lacrosse\n\n\n\n\n\n\nLogistic Regression\n\n\nFeature Engineering\n\n\nUnder Sampling\n\n\n\nAn Introduction to Expected Goals Using Soccer\n\n\n\n\n\nJul 1, 2024\n\n\nColman Kim, Andrew Lee\n\n\n\n\n\n\n\n\n\n\n\n\nIndoor Obstacle Course Test\n\n\n\n\n\n\nCollinearity\n\n\nMultiple Regression\n\n\n\nLearning about collinearity using IOCT Data\n\n\n\n\n\nJun 6, 2024\n\n\nNicholas Clark\n\n\n\n\n\n\nNo matching items",
+    "text": "BlackJack Logistic Regression\n\n\n\n\n\n\nLogistic Regression\n\n\nBinary Data\n\n\n\nAn Introduction to Logistic Regression Using BlackJack\n\n\n\n\n\nJul 1, 2024\n\n\nAndrew Tran, Nicholas Clark\n\n\n\n\n\n\n\n\n\n\n\n\nExpected Goals in Lacrosse\n\n\n\n\n\n\nLogistic Regression\n\n\nDecision Trees\n\n\nGini index\n\n\n\nAn Introduction to Expected Goals Using Lacrosse\n\n\n\n\n\nJul 1, 2024\n\n\nRyan Sellew, Andrew Lee\n\n\n\n\n\n\n\n\n\n\n\n\nExpected Goals in Soccer\n\n\n\n\n\n\nLogistic Regression\n\n\nFeature Engineering\n\n\nUnder Sampling\n\n\n\nAn Introduction to Expected Goals Using Soccer\n\n\n\n\n\nJul 1, 2024\n\n\nColman Kim, Andrew Lee\n\n\n\n\n\n\n\n\n\n\n\n\nIndoor Obstacle Course Test\n\n\n\n\n\n\nCollinearity\n\n\nMultiple Regression\n\n\n\nLearning about collinearity using IOCT Data\n\n\n\n\n\nJun 6, 2024\n\n\nNicholas Clark\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Home",
       "Modules By Topic"
@@ -125,25 +125,25 @@
   {
     "objectID": "soccer/soccer_expected_goals/index.html",
     "href": "soccer/soccer_expected_goals/index.html",
-    "title": "Expected Goals in Lacrosse",
+    "title": "Expected Goals in Soccer",
     "section": "",
     "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Soccer Module",
     "crumbs": [
       "Home",
       "Soccer",
-      "Expected Goals in Lacrosse"
+      "Expected Goals in Soccer"
     ]
   },
   {
     "objectID": "soccer/soccer_expected_goals/index.html#module",
     "href": "soccer/soccer_expected_goals/index.html#module",
-    "title": "Expected Goals in Lacrosse",
+    "title": "Expected Goals in Soccer",
     "section": "",
     "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Soccer Module",
     "crumbs": [
       "Home",
       "Soccer",
-      "Expected Goals in Lacrosse"
+      "Expected Goals in Soccer"
     ]
   }
 ]

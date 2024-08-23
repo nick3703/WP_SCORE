@@ -1,5 +1,5 @@
 ---
-title: "Expected Goals in Lacrosse"
+title: "Expected Goals in Soccer"
 author:
   - name: Colman Kim
     affiliation:
