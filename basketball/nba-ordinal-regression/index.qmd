@@ -20,6 +20,8 @@ categories:
 
 Solutions to this module are available [here](https://github.com/nick3703/WP_SCORE/blob/main/basketball/nba-ordinal-regression/NBA-Ordinal-Regression-Solutions.pdf)
 
+Here is the [data](https://raw.githubusercontent.com/nick3703/WP_SCORE/main/basketball/nba-ordinal-regression/NBA_Data.csv) associated with this module
+
 
 # Purpose
 The statistical topic this module will cover is ORDINAL LOGISTIC REGRESSION as applied to BASKETBALL! When we can't model phenomena as a binary outcome with logistic regression and instead must expand potential response variables by their level (low, medium, high or small, medium, large), we can use ordinal logistic regression. Ordinal logistic regression also makes more efficient use of data by treating it as nominal (think levels) instead of numeric (think linear regression). 
