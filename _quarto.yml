@@ -8,7 +8,7 @@ project:
     - "by-statsds-topic.qmd"
     
 website:
-  google-analytics: "G-JVDQHPRYT1"
+  google-analytics: "G-BNK257S380"
   cookie-consent:
     type: implied
     prefs-text: "Manage cookies"
