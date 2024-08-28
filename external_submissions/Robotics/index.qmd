@@ -1,0 +1,179 @@
+---
+title: "FIRST Robotics Competition - Winning Chances"
+format: html
+date: March 5, 2024
+description: Evaluating the predicted winning probabilities against the actual outcomes.
+editor: 
+  canonical: true
+categories:
+  - Brier score
+  - prediction assessment
+---
+
+### Introduction
+
+The [FIRST Robotics Competition](https://www.firstinspires.org/robotics/frc) (FRC) is a high school level robotics competition, in which “\[u\]nder strict rules and limited time and resources, teams of high school students are challenged to build industrial-size robots to play a difficult field game in alliance with other teams.” It combines “the excitement of sport with the rigors of science and technology”.
+
+One of the key features of FRC is that robot/team competes not individually, but in alliance with other teams. So, it is important for teams to “scout” other teams as potential alliance partners. Various methodologies/models to evaluate each team’s potential contribution were developed. One of the popular models is called Expected Points Added ([EPA](https://www.statbotics.io/blog/intro)) model that produces predicted probabilities of winning for the alliance based on the past performances of each team in the alliance, as well as teams in the opposition alliance. As such, there is a desire/need to assess how good the EPA model prediction is.
+
+Brier score originated with weather forecast research. It was designed to evaluate the predicted probabilities against the actual outcomes and is straight forward to calculate. In this worksheet, we'll evaluate the predicted winning probabilities by the EPA model against the actual FRC outcomes.
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of this activity, you will be able to:
+
+1.  Calculate Brier score.
+
+2.  Interpret Brier score.
+:::
+
+### Data
+
+In this lesson, we will use the EPA data and competition outcomes calculated and compiled by the website [statbotics.io](https://www.statbotics.io/).
+
+```{r}
+dtAll <- read.csv("matches.csv")
+dtUse <- subset(dtAll, status=="Completed" & offseason=="f", 
+                select=c(year, event, playoff, comp_level, winner, epa_win_prob))
+```
+
+Below is a description of the variables:
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable     | Description                                                                |
+|---------------------|---------------------------------------------------|
+| year         | the year/season of the FRC event                                           |
+| event        | unique identifier for each FRC event                                       |
+| playoff      | "t" for playoff match; "f" for qualifying match                            |
+| comp_level   | "qm" for qualifying match; "sf" for semifinals match; "f" for finals match |
+| winner       | winning alliance ("red" or "blue") of the match                            |
+| epa_win_prob | predicted winning probability for the Red Alliance by EPA model            |
+
+</details>
+
+The data covers the competition seasons from 2002 to 2023, except for 2021 due to the COVID pandemic.
+
+```{r}
+unique(dtUse$year)
+```
+
+For our example, we will use a particular event, the Hopper Division competition at the 2023 FRC World Championship in Houston, to illustrate the calculation of Brier score.
+
+```{r}
+dt2023hop <- subset(dtUse, event=="2023hop")
+```
+
+Below is what the raw data looks like. Each row is a match between a Red alliance and a Blue alliance. Each alliance consists of three robots/teams.
+
+```{r}
+#| echo: false
+#| warning: false
+library(DT)
+datatable(dt2023hop)
+```
+
+### Brier Score
+
+For match $i$, let $f_i$ denote the probability forecast. In our case, it is the predicted winning probability for the Red Alliance by EPA model, i.e., the variable *epa_win_prob*. Let $o_i$ denote the match outcome: $o_i=1$ when the Red alliance won and $o_i=0$ when the Blue alliance won. The Brier score for match $i$ is calculated as $(f_i - o_i)^2$. For example, suppose it is predicted that the Red alliance will win with 80% probability, i.e.,  $f_i=0.8$, if the actual outcome is that the Red alliance won, the Brier score is $(0.8-1)^2=0.04$. If the actual outcome is that the Blue alliance won, the Brier score is $(0.8-0)^2=0.64$.
+
+Brier score is a quantity bounded by $0$ and $1$. Brier score of $0$ means correctly predicting the outcome with 100% certainty. 50:50 random guess would give a Brier score of $0.25$. The overall Brier score for all the matches during a competition event or season is simply the average of individual match scores:
+$$\frac{1}{N} \sum_{i=1}^N (f_i - o_i)^2$$
+The following table shows the calculation for each match.
+
+```{r}
+#| echo: false
+outcome <- ifelse(dt2023hop$winner=="red", 1, 0)
+res <- data.frame(dt2023hop, outcome=outcome, score=(dt2023hop$epa_win_prob-outcome)^2)
+res <- subset(res, select=-c(year, event, playoff))
+datatable(res)
+```
+
+The overall Brier score for the 2023 Hopper Division event is `r mean(res$score)`, which is slightly worse than the half way between perfect $0$ and random guess $0.25$.
+
+### Your Turn
+
+Now, it's your turn. Please use the data from the Turing Division competition at the 2022 FRC World Championship to calculate the average Brier score for the event. You should find the data in the file **dt2022tur.csv**.
+
+```{r}
+dt2022tur <- subset(dtUse, event=="2022tur")
+write.csv(dt2022tur, "dt2022tur.csv")
+```
+
+```{r}
+#| echo: false
+outcome <- ifelse(dt2022tur$winner=="red", 1, 0)
+res22tur <- data.frame(dt2022tur, outcome=outcome, score=(dt2022tur$epa_win_prob-outcome)^2)
+```
+
+::: {.callout-note collapse="true" title="Answer" appearance="minimal"}
+The average Brier score for the 2022 Turing Division event is `r mean(res22tur$score)`, which is better than the Brier score for the 2023 Hopper Division event.
+:::
+
+### Over the Years
+
+Since we have the data for more than 20 years, we could answer an interesting question: did the predictive ability of the EPA model change over the years?
+
+We build two simple functions to do the calculations.
+
+<details>
+
+<summary><b>Two Functions</b></summary>
+
+The first function calculates the Brier score for a given data set. Occasionally, a game can end in a draw. We assign the value of $0.5$ to $o_i$ for a draw.
+
+```{r}
+calcBS <- function(dt){
+  n <- nrow(dt)
+  outcome <- rep(NA, n)
+  outcome[dt$winner=="red"] <- 1
+  outcome[dt$winner=="draw"] <- 0.5
+  outcome[dt$winner=="blue"] <- 0
+  diff <- dt$epa_win_prob - outcome
+  Brier <- mean(diff^2)
+  c(n=n, Brier=Brier)
+}
+```
+
+The second function separates the data by year and does the calculation for each year.
+
+```{r}
+byYear <- function(dt=dtUse) {
+  yrs <- unique(dt$year)
+  m <- length(yrs)
+  size <- Brier <- rep(NA, m)
+  for (i in 1:m) {
+    dat <- subset(dt, year==yrs[i])
+    res <- calcBS(dt=dat)
+    size[i] <- res[1]
+    Brier[i] <- res[2]
+  }
+  data.frame(year=yrs, n=size, Brier=Brier)
+}
+FRC <- byYear()
+```
+
+</details>
+
+Below are the Brier scores from 2002 to 2023.
+
+```{r}
+knitr::kable(FRC)
+```
+
+It is interesting to note that the predictive ability of the EPA model has improved for the past 20 years. Since the model has not changed, I believe the improvement comes from established teams becoming more consistent and predictable. Meanwhile, the pool of newer, less experienced teams has stayed healthy. 
+
+```{r}
+plot(FRC$year, FRC$Brier)
+```
+
+::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
+In conclusion, Brier score is a simple statistic that assesses the probability prediction against actual outcome. A smaller Brier score corresponds to better prediction.
+
+The EPA model has been getting better at predicting FRC match outcome.
+:::
+
+### Author
+
+Created by [Jake Tan (Wissahickon High School)](https://www.jakeatan.com/). Jake is a subsystem leader at [FRC Team 341, Miss Daisy](https://www.team341.com/). Team 341 competed at FRC World Championship in the Turing Division in 2022 and Hopper Division in 2023.
