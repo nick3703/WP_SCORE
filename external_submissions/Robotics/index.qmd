@@ -28,7 +28,7 @@ By the end of this activity, you will be able to:
 
 ### Data
 
-In this lesson, we will use the EPA data and competition outcomes calculated and compiled by the website [statbotics.io](https://www.statbotics.io/).
+In this lesson, we will use the EPA [data](https://raw.githubusercontent.com/nick3703/WP_SCORE/main/external_submissions/Robotics/matches.csv) and competition outcomes calculated and compiled by the website [statbotics.io](https://www.statbotics.io/).
 
 ```{r}
 dtAll <- read.csv("matches.csv")
@@ -94,7 +94,7 @@ The overall Brier score for the 2023 Hopper Division event is `r mean(res$score)
 
 ### Your Turn
 
-Now, it's your turn. Please use the data from the Turing Division competition at the 2022 FRC World Championship to calculate the average Brier score for the event. You should find the data in the file **dt2022tur.csv**.
+Now, it's your turn. Please use the data from the Turing Division competition at the 2022 FRC World Championship to calculate the average Brier score for the event. You should find the data in the file [dt2022tur.csv](https://raw.githubusercontent.com/nick3703/WP_SCORE/main/external_submissions/Robotics/dt2022tur.csv).
 
 ```{r}
 dt2022tur <- subset(dtUse, event=="2022tur")
