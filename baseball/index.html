@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrett Salisbury">
+<meta name="dcterms.date" content="2024-09-11">
+<meta name="description" content="Model Assessment through TPR/FPR, PPV/NPV, and F1 Score">
+
+<title>Can you predict whether or not a baseball player will be an All Star given his prior season’s statistics?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Can you predict whether or not a baseball player will be an All Star given his prior season’s statistics?</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">F1 Score</div>
+    <div class="quarto-category">Confusion Matrix</div>
+    <div class="quarto-category">Model Assessment</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Model Assessment through TPR/FPR, PPV/NPV, and F1 Score
+  </div>
+</div>
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Garrett Salisbury <a href="mailto:garrett.salisbury@westpoint.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            West Point
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 11, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<ul>
+<li><p>Understand True Positive (Sensitivity) and True Negative (Specificity) Rates (TPR and TNR, respectively)</p></li>
+<li><p>Understand Positive and Negative Predictive Values (PPV and NPV, respectively)</p></li>
+<li><p>Understand F1 Score</p></li>
+<li><p>Train a predictive model and test it on new data</p></li>
+<li><p>Utilize TPR, TNR, PPV, NPV, and F1 Score to assess model adequacy</p></li>
+</ul>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>There are many players in the MLB that are considered “perennial All Stars.” However, every year there are a handful of players that make the All Star game in an unexpected fashion. All Star game selection does not have a set standard for a player’s performance, but rather seems to rely on their popularity among fans. This module aims to see if there is a way to predict which players are poised to make the All Star game based on the statistics of their previous season.</p>
+<p>In order to accomplish this, a model must be trained by a data set. This trained model is then applied to “unseen” data that has been split from the same data set as the training data. After the new data has been run against the model, the adequacy of the model can be judged through measures including True Positive and True Negative Rates (Sensitivity and Specificity, respectively), Positive and Negative Predictive Values, and the F1 Score. A further explanation of each measure is provided in the Methods/Instructional Content section.</p>
+<p>In order to calculate these measures, a logistic regression model can be used. The different statistics that will be used to classify whether a player would be anticipated to make the All Star game or not are batting average (AVG), home runs (HR), on-base percentage (OBP), and slugging percentage (SLG). A further explanation of AVG, OBP, and SLG will be provided in the Data section.</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>The Lahman database is a set of data frames including pitching, hitting, fielding, and other information. All statistics from 1871 to 2022 are present in the Lahman database. One major benefit of using the Lahman database is the ability to easily join the tables on year or player names. In order to use the Lahman database, the first step is to install its package. Then, both the Batting and AllstarFull tables must be obtained.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("Lahman")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Save the Batting and AllstarFull tables</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Under usable names</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>all_hitters <span class="ot">&lt;-</span> Batting</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>asg_apps <span class="ot">&lt;-</span> AllstarFull</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The next step is to mutate the provided columns in the Batting table to produce columns for AVG, OBP, and SLG. The formulas for each are provided below:</p>
+<p>Batting Average = <span class="math inline">\(AVG = \frac{H}{AB}\)</span>.</p>
+<p>On Base Percentage = <span class="math inline">\(OBP = \frac{H + BB + HBP}{AB + BB + HBP + SF}\)</span>.</p>
+<p>Slugging Percentage = <span class="math inline">\(SLG = \frac{TB}{AB} = \frac{1B + 2*2B + 3*3B + 4*HR}{AB}\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Mutate the above stats into the hitters table</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>all_hitters <span class="ot">&lt;-</span> all_hitters <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AVG =</span> H<span class="sc">/</span>AB,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">OBP =</span> (H <span class="sc">+</span> BB <span class="sc">+</span> HBP)<span class="sc">/</span>(AB <span class="sc">+</span> BB <span class="sc">+</span> HBP <span class="sc">+</span> SF),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">SLG =</span> (H <span class="sc">-</span> X2B <span class="sc">-</span> X3B <span class="sc">-</span> HR <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>             <span class="dv">2</span> <span class="sc">*</span> X2B <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> X3B <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> HR)<span class="sc">/</span>AB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The next step is to subtract 1 from the yearID column in the All Star Game table. Also, add a new column that has a value of 1 for all members in the All Star table to show that a given player was an all star. This allows us to see if a player’s statistics in one season correspond to their selection to the All Star game in the next. After this, join the two tables by year and player.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Subtract one year from the all star table</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#To enable it to be joined correctly and then</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#add a column that marks every player in the table</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#with a "1" for being an all star in that season</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>asg_apps <span class="ot">&lt;-</span> asg_apps <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yearID =</span> yearID <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">allstar =</span> <span class="dv">1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Join the two tables by year and player</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>all_star_hitters <span class="ot">&lt;-</span> all_hitters <span class="sc">%&gt;%</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(asg_apps, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"yearID"</span>, <span class="st">"playerID"</span>), <span class="at">relationship =</span> <span class="st">"many-to-many"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Filter out all seasons prior to 2000, as well as the 2022 season (because this season does not have a corresponding column in the All Star table). Select the variables needed to make the regression model (playerID, yearID, AVG, HR, OBP, SLG, and gameNum) Finally, turn all NAs in the data to zeroes to ensure the regression model can run.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter the data set so it contains the </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#2000-2021 seasons</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter out all players with less than 200 ABs</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#select the stats to be used for model</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>all_star_hitters <span class="ot">&lt;-</span> all_star_hitters <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&lt;</span> <span class="dv">2022</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AB <span class="sc">&gt;</span> <span class="dv">200</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, AVG, HR, OBP, SLG, allstar)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>all_star_hitters[<span class="fu">is.na</span>(all_star_hitters)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Used FavTutor source to implement above line.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>all_star_hitters <span class="sc">%&gt;%</span> </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 15%">
+<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">playerID</th>
+<th style="text-align: left;">yearID</th>
+<th style="text-align: left;">AVG</th>
+<th style="text-align: left;">HR</th>
+<th style="text-align: left;">OBP</th>
+<th style="text-align: left;">SLG</th>
+<th style="text-align: left;">allstar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Length:6885</td>
+<td style="text-align: left;">Min. :2000</td>
+<td style="text-align: left;">Min. :0.1429</td>
+<td style="text-align: left;">Min. : 0.00</td>
+<td style="text-align: left;">Min. :0.1745</td>
+<td style="text-align: left;">Min. :0.1867</td>
+<td style="text-align: left;">Min. :0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Class :character</td>
+<td style="text-align: left;">1st Qu.:2005</td>
+<td style="text-align: left;">1st Qu.:0.2449</td>
+<td style="text-align: left;">1st Qu.: 7.00</td>
+<td style="text-align: left;">1st Qu.:0.3087</td>
+<td style="text-align: left;">1st Qu.:0.3768</td>
+<td style="text-align: left;">1st Qu.:0.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mode :character</td>
+<td style="text-align: left;">Median :2010</td>
+<td style="text-align: left;">Median :0.2654</td>
+<td style="text-align: left;">Median :12.00</td>
+<td style="text-align: left;">Median :0.3316</td>
+<td style="text-align: left;">Median :0.4228</td>
+<td style="text-align: left;">Median :0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Mean :2010</td>
+<td style="text-align: left;">Mean :0.2650</td>
+<td style="text-align: left;">Mean :14.09</td>
+<td style="text-align: left;">Mean :0.3332</td>
+<td style="text-align: left;">Mean :0.4285</td>
+<td style="text-align: left;">Mean :0.1217</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">3rd Qu.:2015</td>
+<td style="text-align: left;">3rd Qu.:0.2860</td>
+<td style="text-align: left;">3rd Qu.:20.00</td>
+<td style="text-align: left;">3rd Qu.:0.3564</td>
+<td style="text-align: left;">3rd Qu.:0.4742</td>
+<td style="text-align: left;">3rd Qu.:0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Max. :2021</td>
+<td style="text-align: left;">Max. :0.3724</td>
+<td style="text-align: left;">Max. :73.00</td>
+<td style="text-align: left;">Max. :0.6094</td>
+<td style="text-align: left;">Max. :0.8634</td>
+<td style="text-align: left;">Max. :1.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">playerID</th>
+<th style="text-align: right;">yearID</th>
+<th style="text-align: right;">AVG</th>
+<th style="text-align: right;">HR</th>
+<th style="text-align: right;">OBP</th>
+<th style="text-align: right;">SLG</th>
+<th style="text-align: right;">allstar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">abbotje01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.274</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.343</td>
+<td style="text-align: right;">0.395</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">abreubo01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.316</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0.416</td>
+<td style="text-align: right;">0.554</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">agbaybe01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.289</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.391</td>
+<td style="text-align: right;">0.477</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">alfoned01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.324</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0.425</td>
+<td style="text-align: right;">0.542</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">alicelu01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.294</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.365</td>
+<td style="text-align: right;">0.404</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">alomaro01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.310</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.378</td>
+<td style="text-align: right;">0.475</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">alomasa02</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.289</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.324</td>
+<td style="text-align: right;">0.404</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">aloumo01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.355</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">0.416</td>
+<td style="text-align: right;">0.623</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">anderbr01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.257</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.375</td>
+<td style="text-align: right;">0.421</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">anderga01</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.286</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.307</td>
+<td style="text-align: right;">0.519</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="methodsinstructional-content" class="level2">
+<h2 class="anchored" data-anchor-id="methodsinstructional-content">Methods/Instructional Content</h2>
+<p>There are many measures that can be used to assess the performance of a model. Some of these measures include Sensitivity, Specificity, Positive Predictive Value (PPV), Negative Predictive Value (NPV), and F1 Score.</p>
+<p>The Monaghan et. al journal article provides a great deal of insight into what the sensitivity, specificity, PPV, and NPV represent.</p>
+<p>A “True Positive” represents a data point that is predicted to be True by the model and is actually True. A “True Negative” represents a data point that is predicted to be False by the model and is actually False. A “False Positive” is a data point that is predicted to be True by the model, but is in fact False. A “False Negative” is a data point that is predicted to be False by the model, but is actually True.</p>
+<p>The Crandon article summarizes what each measure shown above represents. Sensitivity indicates how likely a model is to classify something as true if the data point is actually true. Specificity shows how likely a model is to classify something as false if the data point is actually false. The PPV represents how likely a data point is to be true if the model classifies it as true. The NPV indicates how likely a data point is to be false if the model classifies it as false. The formulas for each are as follows:</p>
+<p><span class="math inline">\(Sensitivity = \frac{True Positives}{True Positives + False Negatives}\)</span>.</p>
+<p><span class="math inline">\(Specificity = \frac{True Negatives}{True Negatives + False Positives}\)</span>.</p>
+<p><span class="math inline">\(PPV = \frac{True Positives}{True Positives + False Positives}\)</span>.</p>
+<p><span class="math inline">\(NPV = \frac{True Negatives}{True Negatives + False Negatives}\)</span>.</p>
+<p>Finally, the Kundu article summarizes how the calculate the F1 score of a model and what this score represents. The F1 score is used to assess the accuracy of a model, relating to the number of correct predictions a model made. The F1 score is a combination of the Precision and Recall of the model. Precision looks at how many True predictions made by the model were True in reality. The Recall of a model is how often values that are True in reality were classified as True by the model. The formula for Precision is the same as that of PPV, and the formula of Recall is the same as Sensitivity. A higher F1 Score for a model indicates high values for both Precision and Recall. The F1 Score indicates how well a model is at classifying values based on what they are in reality and that the predictions are in fact correct.</p>
+<p>Using the formulas for Precision and Recall, the formula for F1 Score is</p>
+<p><span class="math inline">\(F1 Score = \frac{2}{(Precision)^{-1}+(Recall)^{-1}}\)</span></p>
+<p>Or simplified as</p>
+<p><span class="math inline">\(F1 Score = \frac{True Positives}{True Positives + .5(False Positives + False Negatives)}\)</span></p>
+<p>All three of these sources provided background and explanations of the aforementioned scores and how each is used to assess a model.</p>
+</section>
+<section id="exercisesactivities" class="level2">
+<h2 class="anchored" data-anchor-id="exercisesactivities">Exercises/Activities</h2>
+<p>First, split the data set into a training and testing set.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Answer 1">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">679</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>split<span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(all_star_hitters<span class="sc">$</span>allstar, <span class="at">p =</span> .<span class="dv">75</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> all_star_hitters[split,]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> all_star_hitters[<span class="sc">-</span>split,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Next, create a logistic regression model that classifies a hitter as an All Star or not using AVG, HR, OBP, and SLG.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Answer 2">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>all_star_mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(allstar <span class="sc">~</span> AVG <span class="sc">+</span> HR <span class="sc">+</span> OBP <span class="sc">+</span> SLG, <span class="at">data =</span> train,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Now that you have trained a logistic regression model that quantifies a player’s All Star status, use the test data set created above to predict whether a hitter would be an All Star or not using the model.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Answer 3">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(all_star_mod, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.004244 0.041694 0.075333 0.115808 0.141457 0.845290 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Create a matrix that contains the number of each value (True Positive etc.). Use a threshold of 0.2 to classify whether a player is an All Star or not.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Answer 4">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>allstar_matrix <span class="ot">&lt;-</span> <span class="fu">table</span>(test<span class="sc">$</span>allstar, pred <span class="sc">&gt;=</span> threshold)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>allstar_matrix <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">FALSE</th>
+<th style="text-align: right;">TRUE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">1344</td>
+<td style="text-align: right;">163</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">90</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Finally, calculate each of the metrics from above (Sensitivity etc.). Reference the example Confusion Matrix to determine which values are needed to compute each value.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Answer 5">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer 5
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sensitivity <span class="ot">&lt;-</span> allstar_matrix[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">/</span>(allstar_matrix[<span class="dv">2</span>,<span class="dv">2</span>] <span class="sc">+</span> allstar_matrix[<span class="dv">2</span>,<span class="dv">1</span>])</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>specificity <span class="ot">&lt;-</span> allstar_matrix[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">/</span>(allstar_matrix[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> allstar_matrix[<span class="dv">1</span>,<span class="dv">2</span>])</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ppv <span class="ot">&lt;-</span> allstar_matrix[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">/</span>(allstar_matrix[<span class="dv">2</span>,<span class="dv">2</span>] <span class="sc">+</span> allstar_matrix[<span class="dv">1</span>,<span class="dv">2</span>])</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>npv <span class="ot">&lt;-</span> allstar_matrix[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">/</span>(allstar_matrix[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> allstar_matrix[<span class="dv">2</span>,<span class="dv">1</span>])</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>fscore <span class="ot">&lt;-</span> allstar_matrix[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">/</span>(allstar_matrix[<span class="dv">2</span>,<span class="dv">2</span>] <span class="sc">+</span> .<span class="dv">5</span><span class="sc">*</span>(allstar_matrix[<span class="dv">1</span>,<span class="dv">2</span>] <span class="sc">+</span> allstar_matrix[<span class="dv">2</span>,<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Show a table of each value, labeled with its respective measure.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Answer 6">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer 6
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>values <span class="ot">&lt;-</span> <span class="fu">c</span>(sensitivity, specificity, ppv, npv, fscore)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>measures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sensitivity"</span>, <span class="st">"Specificity"</span>, <span class="st">"PPV"</span>, <span class="st">"NPV"</span>, <span class="st">"F1 Score"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">`</span><span class="at">measures</span><span class="st">`</span>, <span class="st">`</span><span class="at">values</span><span class="st">`</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>stats <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">measures</th>
+<th style="text-align: right;">values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sensitivity</td>
+<td style="text-align: right;">0.4206</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Specificity</td>
+<td style="text-align: right;">0.8918</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PPV</td>
+<td style="text-align: right;">0.3557</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NPV</td>
+<td style="text-align: right;">0.9155</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F1 Score</td>
+<td style="text-align: right;">0.3854</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>As shown above, the model is exceptionally good at predicting false values. This is shown by high Specificity and NPV. As a reminder, Sensitivity indicates how likely a model is to classify something as true if the data point is actually true while NPV represents how likely a data point is to be false if the model classifies it as false.</p>
+<p>However, the model is extremely lacking in its ability to predict true values, as shown by low Sensitivity and PPV values. To reiterate, Sensitivity indicates how likely a model is to classify something as true if the data point is actually true and PPV represents how likely a data point is to be true if the model classifies it as true.</p>
+<p>Additionally, the F1 Score of this model is very low, indicating that this model is not very accurate. Again, F1 score represents the number of correct predictions a model made. This indicates that this model may not be very useful at classifying players as All Stars or not depending on their prior season’s statistics.</p>
+</section>
+<section id="wrap-upconclusions" class="level2">
+<h2 class="anchored" data-anchor-id="wrap-upconclusions">Wrap-Up/Conclusions</h2>
+<p>This lesson introduced how to create a logistic regression model, with this model then being used to classify unseen data. Finally, the model’s adequacy was assessed on its ability to classify the unseen data through measures of Sensitivity, Specificity, Positive Predictive Value, and Negative Predictive Value. This was all applied to how well a logistic regression model could classify a player as an All Star or not depending on his statistics the previous season.</p>
+<p>As shown, logistic regression is not very successful at classifying a player as an All Star by using the previous season’s statistics. This is likely because of season-to-season fluctuations in “successful” player performance. Statistics that could be considered good in one year may be considered average in another. One way to make this model stronger would be to standardize all statistics in order to have a common comparison from season to season.</p>
+<p>The biggest limitation of this exercise is that the data set contains a much larger number of players that are not All Stars than players that are All Stars. This is because there are very few players that are selected to the All Star Game every year. One potential mitigation of this issue would be to increase the minimum number of at bats for a player to be considered in the analysis. This would filter out even more players that had no chance of making the All Star game, likely leading to higher values of the performance measures described above.</p>
+<p>Another sports application for this would be classifying a player as a Hall of Famer or not depending on their career statistics and then assessing how adequate the logistic regression model is by testing it on unseen data. This might work better because although no performance benchmarks have been set to be selected for the Hall of Fame, the performance of inductees is much more consistent than players selected to be All Stars.</p>
+<p>An additional skill that builds on this idea is to calculate the Out-of-Sample R Squared, Root Mean Square Error, and Mean Absolute Error to further assess how strong a model is at classifying unseen data. These values could then be compared to other models using the same data, but with altered filters on the minimum number of ABs to see what benchmark for ABs is the most appropriate.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
