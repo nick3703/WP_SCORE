@@ -4,7 +4,7 @@
     "href": "by-statsds-topic.html",
     "title": "Modules By Topic",
     "section": "",
-    "text": "BlackJack Logistic Regression\n\n\n\n\n\n\nLogistic Regression\n\n\nBinary Data\n\n\n\nAn Introduction to Logistic Regression Using BlackJack\n\n\n\n\n\nJul 1, 2024\n\n\nAndrew Tran, Nicholas Clark\n\n\n\n\n\n\n\n\n\n\n\n\nDoes Footedness Impact Free-Kick Accuracy?\n\n\n\n\n\n\nT-test\n\n\nExploratory Analysis\n\n\n\nDoes Footedness Impact Free-Kick Accuracy?\n\n\n\n\n\nSep 11, 2024\n\n\nBridget Ge, Claire Tsay\n\n\n\n\n\n\n\n\n\n\n\n\nExpected Goals in Lacrosse\n\n\n\n\n\n\nLogistic Regression\n\n\nDecision Trees\n\n\nGini index\n\n\n\nAn Introduction to Expected Goals Using Lacrosse\n\n\n\n\n\nJul 1, 2024\n\n\nRyan Sellew, Andrew Lee\n\n\n\n\n\n\n\n\n\n\n\n\nExpected Goals in Soccer\n\n\n\n\n\n\nLogistic Regression\n\n\nFeature Engineering\n\n\nUnder Sampling\n\n\n\nAn Introduction to Expected Goals Using Soccer\n\n\n\n\n\nJul 1, 2024\n\n\nColman Kim, Andrew Lee\n\n\n\n\n\n\n\n\n\n\n\n\nFIRST Robotics Competition - Winning Chances\n\n\n\n\n\n\nBrier score\n\n\nprediction assessment\n\n\n\nEvaluating the predicted winning probabilities against the actual outcomes.\n\n\n\n\n\nMar 5, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nIndoor Obstacle Course Test\n\n\n\n\n\n\nCollinearity\n\n\nMultiple Regression\n\n\n\nLearning about collinearity using IOCT Data\n\n\n\n\n\nJun 6, 2024\n\n\nNicholas Clark\n\n\n\n\n\n\n\n\n\n\n\n\nOrdinal Logistic Regression Basketball Salary Prediction\n\n\n\n\n\n\nOrdinal Regression\n\n\n\nAn Introduction to Ordinal Regression Using Basketball\n\n\n\n\n\nJul 1, 2024\n\n\nJohn Beggs, Skyler Chauff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "text": "BlackJack Logistic Regression\n\n\n\n\n\n\nLogistic Regression\n\n\nBinary Data\n\n\n\nAn Introduction to Logistic Regression Using BlackJack\n\n\n\n\n\nJul 1, 2024\n\n\nAndrew Tran, Nicholas Clark\n\n\n\n\n\n\n\n\n\n\n\n\nDoes Footedness Impact Free-Kick Accuracy?\n\n\n\n\n\n\nT-test\n\n\nExploratory Analysis\n\n\n\nDoes Footedness Impact Free-Kick Accuracy?\n\n\n\n\n\nSep 11, 2024\n\n\nBridget Ge, Claire Tsay\n\n\n\n\n\n\n\n\n\n\n\n\nExpected Goals in Lacrosse\n\n\n\n\n\n\nLogistic Regression\n\n\nDecision Trees\n\n\nGini index\n\n\n\nAn Introduction to Expected Goals Using Lacrosse\n\n\n\n\n\nJul 1, 2024\n\n\nRyan Sellew, Andrew Lee\n\n\n\n\n\n\n\n\n\n\n\n\nExpected Goals in Soccer\n\n\n\n\n\n\nLogistic Regression\n\n\nFeature Engineering\n\n\nUnder Sampling\n\n\n\nAn Introduction to Expected Goals Using Soccer\n\n\n\n\n\nJul 1, 2024\n\n\nColman Kim, Andrew Lee\n\n\n\n\n\n\n\n\n\n\n\n\nFIRST Robotics Competition - Winning Chances\n\n\n\n\n\n\nBrier score\n\n\nprediction assessment\n\n\n\nEvaluating the predicted winning probabilities against the actual outcomes.\n\n\n\n\n\nMar 5, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nIndoor Obstacle Course Test\n\n\n\n\n\n\nCollinearity\n\n\nMultiple Regression\n\n\n\nLearning about collinearity using IOCT Data\n\n\n\n\n\nJun 6, 2024\n\n\nNicholas Clark\n\n\n\n\n\n\n\n\n\n\n\n\nOrdinal Logistic Regression Basketball Salary Prediction\n\n\n\n\n\n\nOrdinal Regression\n\n\n\nAn Introduction to Ordinal Regression Using Basketball\n\n\n\n\n\nJul 1, 2024\n\n\nJohn Beggs, Skyler Chauff\n\n\n\n\n\n\n\n\n\n\n\n\nPredicting Allstars\n\n\n\n\n\n\nF1 Score\n\n\nConfusion Matrix\n\n\nModel Assessment\n\n\n\nModel Assessment through TPR/FPR, PPV/NPV, and F1 Score\n\n\n\n\n\nInvalid Date\n\n\nGarrett Salisbury\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Home",
       "Modules By Topic"
@@ -119,28 +119,119 @@
     ]
   },
   {
-    "objectID": "Lacrosse/expected_goals/index.html",
-    "href": "Lacrosse/expected_goals/index.html",
-    "title": "Expected Goals in Lacrosse",
+    "objectID": "baseball/predicting-all-stars/index.html",
+    "href": "baseball/predicting-all-stars/index.html",
+    "title": "Predicting Allstars",
     "section": "",
-    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Lacrosse Module",
+    "text": "Understand True Positive (Sensitivity) and True Negative (Specificity) Rates (TPR and TNR, respectively)\nUnderstand Positive and Negative Predictive Values (PPV and NPV, respectively)\nUnderstand F1 Score\nTrain a predictive model and test it on new data\nUtilize TPR, TNR, PPV, NPV, and F1 Score to assess model adequacy",
     "crumbs": [
       "Home",
-      "Lacrosse",
-      "Expected Goals in Lacrosse"
+      "Baseball",
+      "Predicting Allstars"
     ]
   },
   {
-    "objectID": "Lacrosse/expected_goals/index.html#module",
-    "href": "Lacrosse/expected_goals/index.html#module",
-    "title": "Expected Goals in Lacrosse",
+    "objectID": "baseball/predicting-all-stars/index.html#learning-objectives",
+    "href": "baseball/predicting-all-stars/index.html#learning-objectives",
+    "title": "Predicting Allstars",
     "section": "",
-    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Lacrosse Module",
+    "text": "Understand True Positive (Sensitivity) and True Negative (Specificity) Rates (TPR and TNR, respectively)\nUnderstand Positive and Negative Predictive Values (PPV and NPV, respectively)\nUnderstand F1 Score\nTrain a predictive model and test it on new data\nUtilize TPR, TNR, PPV, NPV, and F1 Score to assess model adequacy",
     "crumbs": [
       "Home",
-      "Lacrosse",
-      "Expected Goals in Lacrosse"
+      "Baseball",
+      "Predicting Allstars"
     ]
+  },
+  {
+    "objectID": "baseball/predicting-all-stars/index.html#introduction",
+    "href": "baseball/predicting-all-stars/index.html#introduction",
+    "title": "Predicting Allstars",
+    "section": "Introduction",
+    "text": "Introduction\nThere are many players in the MLB that are considered “perennial All Stars.” However, every year there are a handful of players that make the All Star game in an unexpected fashion. All Star game selection does not have a set standard for a player’s performance, but rather seems to rely on their popularity among fans. This module aims to see if there is a way to predict which players are poised to make the All Star game based on the statistics of their previous season.\nIn order to accomplish this, a model must be trained by a data set. This trained model is then applied to “unseen” data that has been split from the same data set as the training data. After the new data has been run against the model, the adequacy of the model can be judged through measures including True Positive and True Negative Rates (Sensitivity and Specificity, respectively), Positive and Negative Predictive Values, and the F1 Score. A further explanation of each measure is provided in the Methods/Instructional Content section.\nIn order to calculate these measures, a logistic regression model can be used. The different statistics that will be used to classify whether a player would be anticipated to make the All Star game or not are batting average (AVG), home runs (HR), on-base percentage (OBP), and slugging percentage (SLG). A further explanation of AVG, OBP, and SLG will be provided in the Data section.",
+    "crumbs": [
+      "Home",
+      "Baseball",
+      "Predicting Allstars"
+    ]
+  },
+  {
+    "objectID": "baseball/predicting-all-stars/index.html#data",
+    "href": "baseball/predicting-all-stars/index.html#data",
+    "title": "Predicting Allstars",
+    "section": "Data",
+    "text": "Data\nThe Lahman database is a set of data frames including pitching, hitting, fielding, and other information. All statistics from 1871 to 2022 are present in the Lahman database. One major benefit of using the Lahman database is the ability to easily join the tables on year or player names. In order to use the Lahman database, the first step is to install its package. Then, both the Batting and AllstarFull tables must be obtained.\n\n#install.packages(\"Lahman\")\nlibrary(Lahman)\nlibrary(tidyverse)\nlibrary(knitr)\nlibrary(caret)\n\n#Save the Batting and AllstarFull tables\n#Under usable names\nall_hitters &lt;- Batting\nasg_apps &lt;- AllstarFull\n\nThe next step is to mutate the provided columns in the Batting table to produce columns for AVG, OBP, and SLG. The formulas for each are provided below:\nBatting Average = \\(AVG = \\frac{H}{AB}\\).\nOn Base Percentage = \\(OBP = \\frac{H + BB + HBP}{AB + BB + HBP + SF}\\).\nSlugging Percentage = \\(SLG = \\frac{TB}{AB} = \\frac{1B + 2*2B + 3*3B + 4*HR}{AB}\\)\n\n#Mutate the above stats into the hitters table\nall_hitters &lt;- all_hitters %&gt;% \n  mutate(AVG = H/AB,\n          OBP = (H + BB + HBP)/(AB + BB + HBP + SF),\n         SLG = (H - X2B - X3B - HR +\n             2 * X2B + 3 * X3B + 4 * HR)/AB)\n\nThe next step is to subtract 1 from the yearID column in the All Star Game table. Also, add a new column that has a value of 1 for all members in the All Star table to show that a given player was an all star. This allows us to see if a player’s statistics in one season correspond to their selection to the All Star game in the next. After this, join the two tables by year and player.\n\n#Subtract one year from the all star table\n#To enable it to be joined correctly and then\n#add a column that marks every player in the table\n#with a \"1\" for being an all star in that season\nasg_apps &lt;- asg_apps %&gt;% \n  mutate(yearID = yearID - 1) %&gt;% \n  mutate(allstar = 1)\n\n#Join the two tables by year and player\nall_star_hitters &lt;- all_hitters %&gt;% \n  left_join(asg_apps, by = c(\"yearID\", \"playerID\"), relationship = \"many-to-many\")\n\nFilter out all seasons prior to 2000, as well as the 2022 season (because this season does not have a corresponding column in the All Star table). Select the variables needed to make the regression model (playerID, yearID, AVG, HR, OBP, SLG, and gameNum) Finally, turn all NAs in the data to zeroes to ensure the regression model can run.\n\n#Filter the data set so it contains the \n#2000-2021 seasons\n#Filter out all players with less than 200 ABs\n#select the stats to be used for model\nall_star_hitters &lt;- all_star_hitters %&gt;% \n  filter(yearID &gt;= 2000) %&gt;% \n  filter(yearID &lt; 2022) %&gt;% \n  filter(AB &gt; 200) %&gt;% \n  select(playerID, yearID, AVG, HR, OBP, SLG, allstar)\n\nall_star_hitters[is.na(all_star_hitters)] &lt;- 0\n#Used FavTutor source to implement above line.\n\nall_star_hitters %&gt;% \n  summary() %&gt;% \n  kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nplayerID\nyearID\nAVG\nHR\nOBP\nSLG\nallstar\n\n\n\n\n\nLength:6885\nMin. :2000\nMin. :0.1429\nMin. : 0.00\nMin. :0.1745\nMin. :0.1867\nMin. :0.0000\n\n\n\nClass :character\n1st Qu.:2005\n1st Qu.:0.2449\n1st Qu.: 7.00\n1st Qu.:0.3087\n1st Qu.:0.3768\n1st Qu.:0.0000\n\n\n\nMode :character\nMedian :2010\nMedian :0.2654\nMedian :12.00\nMedian :0.3316\nMedian :0.4228\nMedian :0.0000\n\n\n\nNA\nMean :2010\nMean :0.2650\nMean :14.09\nMean :0.3332\nMean :0.4285\nMean :0.1217\n\n\n\nNA\n3rd Qu.:2015\n3rd Qu.:0.2860\n3rd Qu.:20.00\n3rd Qu.:0.3564\n3rd Qu.:0.4742\n3rd Qu.:0.0000\n\n\n\nNA\nMax. :2021\nMax. :0.3724\nMax. :73.00\nMax. :0.6094\nMax. :0.8634\nMax. :1.0000\n\n\n\n\n\n\n\n\n\n\nplayerID\nyearID\nAVG\nHR\nOBP\nSLG\nallstar\n\n\n\n\nabbotje01\n2000\n0.274\n3\n0.343\n0.395\n0\n\n\nabreubo01\n2000\n0.316\n25\n0.416\n0.554\n0\n\n\nagbaybe01\n2000\n0.289\n15\n0.391\n0.477\n0\n\n\nalfoned01\n2000\n0.324\n25\n0.425\n0.542\n0\n\n\nalicelu01\n2000\n0.294\n6\n0.365\n0.404\n0\n\n\nalomaro01\n2000\n0.310\n19\n0.378\n0.475\n1\n\n\nalomasa02\n2000\n0.289\n7\n0.324\n0.404\n0\n\n\naloumo01\n2000\n0.355\n30\n0.416\n0.623\n1\n\n\nanderbr01\n2000\n0.257\n19\n0.375\n0.421\n0\n\n\nanderga01\n2000\n0.286\n35\n0.307\n0.519\n0",
+    "crumbs": [
+      "Home",
+      "Baseball",
+      "Predicting Allstars"
+    ]
+  },
+  {
+    "objectID": "baseball/predicting-all-stars/index.html#methodsinstructional-content",
+    "href": "baseball/predicting-all-stars/index.html#methodsinstructional-content",
+    "title": "Predicting Allstars",
+    "section": "Methods/Instructional Content",
+    "text": "Methods/Instructional Content\nThere are many measures that can be used to assess the performance of a model. Some of these measures include Sensitivity, Specificity, Positive Predictive Value (PPV), Negative Predictive Value (NPV), and F1 Score.\nThe Monaghan et. al journal article provides a great deal of insight into what the sensitivity, specificity, PPV, and NPV represent.\nA “True Positive” represents a data point that is predicted to be True by the model and is actually True. A “True Negative” represents a data point that is predicted to be False by the model and is actually False. A “False Positive” is a data point that is predicted to be True by the model, but is in fact False. A “False Negative” is a data point that is predicted to be False by the model, but is actually True.\nThe Crandon article summarizes what each measure shown above represents. Sensitivity indicates how likely a model is to classify something as true if the data point is actually true. Specificity shows how likely a model is to classify something as false if the data point is actually false. The PPV represents how likely a data point is to be true if the model classifies it as true. The NPV indicates how likely a data point is to be false if the model classifies it as false. The formulas for each are as follows:\n\\(Sensitivity = \\frac{True Positives}{True Positives + False Negatives}\\).\n\\(Specificity = \\frac{True Negatives}{True Negatives + False Positives}\\).\n\\(PPV = \\frac{True Positives}{True Positives + False Positives}\\).\n\\(NPV = \\frac{True Negatives}{True Negatives + False Negatives}\\).\nFinally, the Kundu article summarizes how the calculate the F1 score of a model and what this score represents. The F1 score is used to assess the accuracy of a model, relating to the number of correct predictions a model made. The F1 score is a combination of the Precision and Recall of the model. Precision looks at how many True predictions made by the model were True in reality. The Recall of a model is how often values that are True in reality were classified as True by the model. The formula for Precision is the same as that of PPV, and the formula of Recall is the same as Sensitivity. A higher F1 Score for a model indicates high values for both Precision and Recall. The F1 Score indicates how well a model is at classifying values based on what they are in reality and that the predictions are in fact correct.\nUsing the formulas for Precision and Recall, the formula for F1 Score is\n\\(F1 Score = \\frac{2}{(Precision)^{-1}+(Recall)^{-1}}\\)\nOr simplified as\n\\(F1 Score = \\frac{True Positives}{True Positives + .5(False Positives + False Negatives)}\\)\nAll three of these sources provided background and explanations of the aforementioned scores and how each is used to assess a model.",
+    "crumbs": [
+      "Home",
+      "Baseball",
+      "Predicting Allstars"
+    ]
+  },
+  {
+    "objectID": "baseball/predicting-all-stars/index.html#exercisesactivities",
+    "href": "baseball/predicting-all-stars/index.html#exercisesactivities",
+    "title": "Predicting Allstars",
+    "section": "Exercises/Activities",
+    "text": "Exercises/Activities\nFirst, split the data set into a training and testing set.\n\n\n\n\n\n\nAnswer 1\n\n\n\n\n\n\nset.seed(679)\nsplit&lt;- createDataPartition(all_star_hitters$allstar, p = .75, list = FALSE)\ntrain &lt;- all_star_hitters[split,]\ntest &lt;- all_star_hitters[-split,]\n\n\n\n\nNext, create a logistic regression model that classifies a hitter as an All Star or not using AVG, HR, OBP, and SLG.\n\n\n\n\n\n\nAnswer 2\n\n\n\n\n\n\nall_star_mod &lt;- glm(allstar ~ AVG + HR + OBP + SLG, data = train,\n                    family = \"binomial\")\n\n\n\n\nNow that you have trained a logistic regression model that quantifies a player’s All Star status, use the test data set created above to predict whether a hitter would be an All Star or not using the model.\n\n\n\n\n\n\nAnswer 3\n\n\n\n\n\n\npred &lt;- predict(all_star_mod, newdata = test, type = \"response\")\nsummary(pred)\n\n    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. \n0.004244 0.041694 0.075333 0.115808 0.141457 0.845290 \n\n\n\n\n\nCreate a matrix that contains the number of each value (True Positive etc.). Use a threshold of 0.2 to classify whether a player is an All Star or not.\n\n\n\n\n\n\nAnswer 4\n\n\n\n\n\n\nthreshold &lt;- 0.2\nallstar_matrix &lt;- table(test$allstar, pred &gt;= threshold)\nallstar_matrix %&gt;% \n  kable(col.names = )\n\n\n\n\n\nFALSE\nTRUE\n\n\n\n\n0\n1344\n163\n\n\n1\n124\n90\n\n\n\n\n\n\n\n\nFinally, calculate each of the metrics from above (Sensitivity etc.). Reference the example Confusion Matrix to determine which values are needed to compute each value.\n\n\n\n\n\n\nAnswer 5\n\n\n\n\n\n\nsensitivity &lt;- allstar_matrix[2,2]/(allstar_matrix[2,2] + allstar_matrix[2,1])\n\nspecificity &lt;- allstar_matrix[1,1]/(allstar_matrix[1,1] + allstar_matrix[1,2])\n\nppv &lt;- allstar_matrix[2,2]/(allstar_matrix[2,2] + allstar_matrix[1,2])\n\nnpv &lt;- allstar_matrix[1,1]/(allstar_matrix[1,1] + allstar_matrix[2,1])\n\nfscore &lt;- allstar_matrix[2,2]/(allstar_matrix[2,2] + .5*(allstar_matrix[1,2] + allstar_matrix[2,1]))\n\n\n\n\nShow a table of each value, labeled with its respective measure.\n\n\n\n\n\n\nAnswer 6\n\n\n\n\n\n\nvalues &lt;- c(sensitivity, specificity, ppv, npv, fscore)\nmeasures &lt;- c(\"Sensitivity\", \"Specificity\", \"PPV\", \"NPV\", \"F1 Score\")\nstats &lt;- data.frame(`measures`, `values`)\nstats %&gt;% \n  kable(digits = 4)\n\n\n\n\nmeasures\nvalues\n\n\n\n\nSensitivity\n0.4206\n\n\nSpecificity\n0.8918\n\n\nPPV\n0.3557\n\n\nNPV\n0.9155\n\n\nF1 Score\n0.3854\n\n\n\n\n\n\n\n\nAs shown above, the model is exceptionally good at predicting false values. This is shown by high Specificity and NPV. As a reminder, Sensitivity indicates how likely a model is to classify something as true if the data point is actually true while NPV represents how likely a data point is to be false if the model classifies it as false.\nHowever, the model is extremely lacking in its ability to predict true values, as shown by low Sensitivity and PPV values. To reiterate, Sensitivity indicates how likely a model is to classify something as true if the data point is actually true and PPV represents how likely a data point is to be true if the model classifies it as true.\nAdditionally, the F1 Score of this model is very low, indicating that this model is not very accurate. Again, F1 score represents the number of correct predictions a model made. This indicates that this model may not be very useful at classifying players as All Stars or not depending on their prior season’s statistics.",
+    "crumbs": [
+      "Home",
+      "Baseball",
+      "Predicting Allstars"
+    ]
+  },
+  {
+    "objectID": "baseball/predicting-all-stars/index.html#wrap-upconclusions",
+    "href": "baseball/predicting-all-stars/index.html#wrap-upconclusions",
+    "title": "Predicting Allstars",
+    "section": "Wrap-Up/Conclusions",
+    "text": "Wrap-Up/Conclusions\nThis lesson introduced how to create a logistic regression model, with this model then being used to classify unseen data. Finally, the model’s adequacy was assessed on its ability to classify the unseen data through measures of Sensitivity, Specificity, Positive Predictive Value, and Negative Predictive Value. This was all applied to how well a logistic regression model could classify a player as an All Star or not depending on his statistics the previous season.\nAs shown, logistic regression is not very successful at classifying a player as an All Star by using the previous season’s statistics. This is likely because of season-to-season fluctuations in “successful” player performance. Statistics that could be considered good in one year may be considered average in another. One way to make this model stronger would be to standardize all statistics in order to have a common comparison from season to season.\nThe biggest limitation of this exercise is that the data set contains a much larger number of players that are not All Stars than players that are All Stars. This is because there are very few players that are selected to the All Star Game every year. One potential mitigation of this issue would be to increase the minimum number of at bats for a player to be considered in the analysis. This would filter out even more players that had no chance of making the All Star game, likely leading to higher values of the performance measures described above.\nAnother sports application for this would be classifying a player as a Hall of Famer or not depending on their career statistics and then assessing how adequate the logistic regression model is by testing it on unseen data. This might work better because although no performance benchmarks have been set to be selected for the Hall of Fame, the performance of inductees is much more consistent than players selected to be All Stars.\nAn additional skill that builds on this idea is to calculate the Out-of-Sample R Squared, Root Mean Square Error, and Mean Absolute Error to further assess how strong a model is at classifying unseen data. These values could then be compared to other models using the same data, but with altered filters on the minimum number of ABs to see what benchmark for ABs is the most appropriate.",
+    "crumbs": [
+      "Home",
+      "Baseball",
+      "Predicting Allstars"
+    ]
+  },
+  {
+    "objectID": "BlackJack/BlackJack_Log_Reg/index.html",
+    "href": "BlackJack/BlackJack_Log_Reg/index.html",
+    "title": "BlackJack Logistic Regression",
+    "section": "",
+    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform BlackJack Module",
+    "crumbs": [
+      "Home",
+      "BlackJack",
+      "BlackJack Logistic Regression"
+    ]
+  },
+  {
+    "objectID": "BlackJack/BlackJack_Log_Reg/index.html#module",
+    "href": "BlackJack/BlackJack_Log_Reg/index.html#module",
+    "title": "BlackJack Logistic Regression",
+    "section": "",
+    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform BlackJack Module",
+    "crumbs": [
+      "Home",
+      "BlackJack",
+      "BlackJack Logistic Regression"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "West Point SCORE Module Pre-print Repository",
+    "section": "",
+    "text": "This page contains education materials for the SCORE Network that were created by faculty and students from the Department of Mathematical Sciences at West Point.\nThe SCORE Network Module Repository enables you to search for modules by either sport (along the left), or you can browse by statistics and data science topic.\n\n\n\n\n\n\nDisclaimer\n\n\n\n\n\nPlease note that these material have not yet completed the required pedagogical and industry peer reviews to become a published module on the SCORE Network.\nHowever, all modules listed under their respective sports have been reviewed by a West Point statistics instructor and are able for others to use.\n\n\n\nThe development of the SCORE with Data network is funded by the National Science Foundation (award 2142705).\n\n\n\n\n\n\nContributing and/or Joining the SCORE Network\n\n\n\n\n\n\nIf you are interested in contributing to and/or joining the SCORE Network, please check out https://scorenetwork.org/index.html.\nThis page was based off of the work done by https://github.com/iramler/slu_score_preprints.\nThe basic structure of the this repository is to have a directory for each sport, then within the sport, each module will have a folder containing its files. We have found that this allows us to easily submit a module in this repository to the SCORE Network and requires only minimal work for preparing it for the SCORE module repository after it is accepted."
   },
   {
     "objectID": "_team.html",
@@ -176,34 +267,27 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "West Point SCORE Module Pre-print Repository",
+    "objectID": "Lacrosse/expected_goals/index.html",
+    "href": "Lacrosse/expected_goals/index.html",
+    "title": "Expected Goals in Lacrosse",
     "section": "",
-    "text": "This page contains education materials for the SCORE Network that were created by faculty and students from the Department of Mathematical Sciences at West Point.\nThe SCORE Network Module Repository enables you to search for modules by either sport (along the left), or you can browse by statistics and data science topic.\n\n\n\n\n\n\nDisclaimer\n\n\n\n\n\nPlease note that these material have not yet completed the required pedagogical and industry peer reviews to become a published module on the SCORE Network.\nHowever, all modules listed under their respective sports have been reviewed by a West Point statistics instructor and are able for others to use.\n\n\n\nThe development of the SCORE with Data network is funded by the National Science Foundation (award 2142705).\n\n\n\n\n\n\nContributing and/or Joining the SCORE Network\n\n\n\n\n\n\nIf you are interested in contributing to and/or joining the SCORE Network, please check out https://scorenetwork.org/index.html.\nThis page was based off of the work done by https://github.com/iramler/slu_score_preprints.\nThe basic structure of the this repository is to have a directory for each sport, then within the sport, each module will have a folder containing its files. We have found that this allows us to easily submit a module in this repository to the SCORE Network and requires only minimal work for preparing it for the SCORE module repository after it is accepted."
-  },
-  {
-    "objectID": "BlackJack/BlackJack_Log_Reg/index.html",
-    "href": "BlackJack/BlackJack_Log_Reg/index.html",
-    "title": "BlackJack Logistic Regression",
-    "section": "",
-    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform BlackJack Module",
+    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Lacrosse Module",
     "crumbs": [
       "Home",
-      "BlackJack",
-      "BlackJack Logistic Regression"
+      "Lacrosse",
+      "Expected Goals in Lacrosse"
     ]
   },
   {
-    "objectID": "BlackJack/BlackJack_Log_Reg/index.html#module",
-    "href": "BlackJack/BlackJack_Log_Reg/index.html#module",
-    "title": "BlackJack Logistic Regression",
+    "objectID": "Lacrosse/expected_goals/index.html#module",
+    "href": "Lacrosse/expected_goals/index.html#module",
+    "title": "Expected Goals in Lacrosse",
     "section": "",
-    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform BlackJack Module",
+    "text": "Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.\nThis module is available on the ISLE platform Expected Goals in Lacrosse Module",
     "crumbs": [
       "Home",
-      "BlackJack",
-      "BlackJack Logistic Regression"
+      "Lacrosse",
+      "Expected Goals in Lacrosse"
     ]
   },
   {

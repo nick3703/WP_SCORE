@@ -1,5 +1,5 @@
 ---
-title: "Can you predict whether or not a baseball player will be an All Star given his prior season's statistics?"
+title: "Predicting Allstars"
 author:
   - name: Garrett Salisbury
     email: garrett.salisbury@westpoint.edu
