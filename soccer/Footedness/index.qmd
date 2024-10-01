@@ -30,7 +30,6 @@ library(dplyr)
 ```
 
 
-Solutions to this module are available at: 
 
 
 Solutions to this module are available [here](https://github.com/nick3703/WP_SCORE/raw/main/soccer/Footedness/Footedness-Module-Solution.pdf)
@@ -127,9 +126,7 @@ The following are the exercises related to the module. These questions will help
 
 The first step to any statistical analysis is to ask a research question. In this case, we are trying to investigate a difference in means free-kick accuracy score between right-footed and left-footed players. *What do you think is a possible research question that can be used for this?*
 
-For our statistical investigation, we chose to use the question:
-**Is there an association between preferred foot and free kick accuracy score in the European Soccer League?**
-$\\$
+
 
 \underline{Step 2: Design a Study and Collect Data}
 
@@ -148,9 +145,9 @@ As for the data, we explained in the earlier data section how it was obtained, a
 
 \underline{Step 3: Explore the Data}
 
-In the Data section, we took a look at the data and selected the variables that we needed in order to conduct the statistical analysis, so now all we need to do is do some data exploration and visualization. One way to do this for comparing two means is to create the five-number summary and corresponding box-plot. *What is a five-number summary?* This is just a way of summarizing data using the minimum, first quartile, median, third quartile, and maximum values of the data set.
+In the Data section, we took a look at the data and selected the variables that we needed in order to conduct the statistical analysis, so now all we need to do is do some data exploration and visualization. One way to do this for comparing two means is to create the five-number summary and corresponding box-plot. *What is a five-number summary?* 
 
-```{r}
+```{r, eval=FALSE}
 #Five number summary of each of the two populations
 select_player_attributes %>%
   group_by(preferred_foot) %>%
@@ -169,9 +166,9 @@ select_player_attributes %>%
        x = "Free Kick Accuracy", 
        title = "Free Kick Accuracy vs Preferred Foot")
 ```
-*What does the five-number summary and box plot show about the distribution of free-kick accuracy score between the two groups? Does it show evidence of a significant difference?*
+*Compute the five-number summary. What does the five-number summary and box plot show about the distribution of free-kick accuracy score between the two groups? Does it show evidence of a significant difference?*
 
-The boxplot and summary seem to indicate preliminary evidence for a difference in means. Even though this difference is quite small, because of the sheer number of observations we have, it could still be significant.
+
 
 ```{r}
 #Histogram to visualize data
@@ -183,7 +180,7 @@ select_player_attributes %>%
 ```
 *What does the distribution of the histogram show? How does this add to the information shown by the boxplot?*
 
-The histogram confirms what we observed in the box plot, a slight difference in means between the two groups. However, it also shows us more details about the distribution of these scores. We can observe that both score distributions seem approximately normal.
+
 
 From the two visualizations we created, there does seem to be a difference between the mean free-kick accuracy score between the two groups, which means that it is probably worth investigating further using a statistical test.
 
@@ -218,7 +215,6 @@ t
 ```
 *What is our calculated t-statistic? What does this t-statistic represent and what kind of evidence does it provide for our hypotheses?*
 
-Our calculated t-statistic appears to be 54.00372, meaning that our statistic is about 54 standard deviations away from the null. Considering that any t-statistic greater than 4 is considered very strong evidence to support the alternative hypothesis, this statistic shows extremely strong evidence that there actually exists a difference in means between the two groups.
 
 Now that we have the t-statistic calculated, we can use it to determine the p-value, or the probability that the observed difference in means between the two groups was caused by chance alone. In order to do this, we use R's pt function with n-2 degrees of freedom, as there are two groups being compared. In addition to this, we need to multiply whatever value we get from the pt function by two, as we are trying to check if there is any difference between the two means, meaning that it doesn't matter which one is higher or which one is lower than the other, just that the two are different. When we do this, it is called a two-tailed test, as we are adding up the probabilities from both "tails" of the distribution.
 ```{r}
@@ -229,8 +225,6 @@ pvalue
 ```
 *What is the p-value? When the p-value is compared to the significance level of 0.01, what does it show?*
 
-Because our p-value is very small (less than the significance level of 0.01), we can conclude that the probability of getting our observed difference in means is very small as well, providing evidence for the fact that there actually exists a difference between the means of the two populations.
-
 Finally, we'll calculate a confidence interval to determine what we think the actual difference between the two means is. Because we are using a 0.01 significance level, we will calculate the confidence interval with 99% confidence.
 ```{r}
 #calculate Confidence interval at 99% confidence
@@ -239,7 +233,8 @@ se = sd
 CI = c(statistic - multiplier*se, statistic + multiplier*se)
 CI
 ```
-*What does the 99% level of confidence represent?* It shows that we are 99% confident that the actual difference between the two means falls between the two numbers presented in the confidence interval.
+*What does the 99% level of confidence represent?* 
+
 
 We actually conducted this test the hard way, finding our own summary statistics for the data, but R actually has a function that will perform the t-test for you and display the t-statistic, p-value, and confidence interval. In fact, this whole test could have performed in just one line of code!
 ```{r}
