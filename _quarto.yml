@@ -6,7 +6,7 @@ project:
     - "_team.qmd"
     - "*/*/index.qmd"
     - "by-statsds-topic.qmd"
-    
+     
 website:
   google-analytics: "G-BNK257S380"
   cookie-consent:

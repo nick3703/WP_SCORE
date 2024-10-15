@@ -14,9 +14,12 @@ categories:
 
 The [FIRST Robotics Competition](https://www.firstinspires.org/robotics/frc) (FRC) is a high school level robotics competition, in which “\[u\]nder strict rules and limited time and resources, teams of high school students are challenged to build industrial-size robots to play a difficult field game in alliance with other teams.” It combines “the excitement of sport with the rigors of science and technology”.
 
-One of the key features of FRC is that robot/team competes not individually, but in alliance with other teams. So, it is important for teams to “scout” other teams as potential alliance partners. Various methodologies/models to evaluate each team’s potential contribution were developed. One of the popular models is called Expected Points Added ([EPA](https://www.statbotics.io/blog/intro)) model that produces predicted probabilities of winning for the alliance based on the past performances of each team in the alliance, as well as teams in the opposition alliance. As such, there is a desire/need to assess how good the EPA model prediction is.
+One of the key features of FRC is that robot/team competes not individually, but in alliance with other teams. So, it is important for teams to “scout” other teams as potential alliance partners. Various methodologies/models to evaluate each team’s potential contribution were developed. One of the popular models is called Expected Points Added (EPA) model.
 
-Brier score originated with weather forecast research. It was designed to evaluate the predicted probabilities against the actual outcomes and is straight forward to calculate. In this worksheet, we'll evaluate the predicted winning probabilities by the EPA model against the actual FRC outcomes.
+Detailed algorithm of the EPA model can be found at here (https://www.statbotics.io/blog/epa). Briefly, the EPA model builds upon the Elo rating system which is a “well-known method for ranking chess players, and has been adapted to many other domains.” It produces predicted probabilities of winning for the alliance based on the past performances of each team in the alliance, as well as teams in the opposition alliance. As such, there is a desire/need to assess how good the EPA model prediction is.
+
+Brier score originated with weather forecast research. It was designed to evaluate the predicted probabilities against the actual outcomes and is straight forward to calculate. While it is not widely used outside specific use cases, it is one of many approaches for the important step of evaluating models based on their predictions. Since the EPA model provides the predicted winning probabilities, Brier score is useful for evaluating its performance by comparing its predicted winning probabilities to the actual FRC outcomes.
+
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 By the end of this activity, you will be able to:
