@@ -9,7 +9,7 @@ author:
     email: Andrew.lee@westpoint.edu
     affiliation:
       - ref: wp
-date: "July 1, 2024"
+date: "May 19, 2025"
 description: "An Introduction to Expected Goals Using Soccer"
 editor: 
   canonical: true
@@ -24,7 +24,7 @@ categories:
 Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.
 
 
-This module is available on the ISLE platform [Expected Goals in Soccer Module](https://isle.stat.cmu.edu/SCORE/Soccer_Expected_Goals/)
+This module is available on the ISLE platform [Expected Goals in Soccer Module](https://isle.stat.cmu.edu/SCORE/Soccer_Expected_Goals_CKim/)
 
 <!-- ### Introduction -->
 

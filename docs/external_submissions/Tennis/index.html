@@ -446,6 +446,8 @@ window.Quarto = {
 
 <section id="welcome" class="level2">
 <h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
+<p>An accompanying worksheet for instructors is available <a href="https://github.com/nick3703/WP_SCORE/raw/main/external_submissions/Tennis/Tennis_Ace_Rate_Worksheet_Version_forInstructors.docx">here</a></p>
+<p>A worksheet for students to follow is available <a href="https://github.com/nick3703/WP_SCORE/raw/main/external_submissions/Tennis/Tennis_Ace_Rate_Worksheet_Version_forStudents.docx">here</a></p>
 <p>Please watch this intro video from tennis analyst Dr.&nbsp;Stephanie Kovalchik to learn about the questions we’ll be investigating today!</p>
 <iframe src="https://drive.google.com/file/d/1elu4ZeSGuLIO5AgUnh4nB54btxtPxNkJ/preview" width="640" height="480" allow="autoplay">
 </iframe>
@@ -970,7 +972,7 @@ session$onSessionEnded(function() {
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "ace_rate_q", question = structure("We will be analyzing matches of various lengths (that is, with varying numbers of games). Why might it be inappropriate to simply look at the number of aces in each match?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_d920868", 
+"character")), answers = list(structure(list(id = "lnr_ans_3700d99", 
     option = "", value = "", label = structure("", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -979,7 +981,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
     incorrect = NULL, message = structure("Example correct answer: Longer matches have more chances for aces, naturally leading to more aces. But that’s obvious and not very interesting. So we will create a new variable adjusting for the length of matches, ace rate.", html = TRUE, class = c("html", 
     "character")), post_message = NULL), ids = list(answer = "ace_rate_q-answer", 
     question = "ace_rate_q"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 541391016.747895, options = list(
+    allow_retry = FALSE, seed = 1563233418.27206, options = list(
         placeholder = "Enter answer here...", trim = TRUE, rows = 5)), class = c("learnr_text", 
 "tutorial_question")), session = session)
 </script>
@@ -1035,20 +1037,20 @@ learnr:::store_exercise_cache(structure(list(label = "head", global_setup = stru
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "rows", question = structure("What does each row represent?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_8f5987a", 
+"character")), answers = list(structure(list(id = "lnr_ans_4cdf8cb", 
     option = "One tennis tournament", value = "One tennis tournament", 
     label = structure("One tennis tournament", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6ba2049", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_efc7d14", 
     option = "One tennis match in a tournament", value = "One tennis match in a tournament", 
     label = structure("One tennis match in a tournament", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("That’s right! One row corresponds to one tennis match, where one player plays another until winning and advancing in the tournament or losing. It is comprised of multiple sets, (service) games, points, and serves.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b6cf8ed", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f603c8b", 
     option = "One tennis serve", value = "One tennis serve", 
     label = structure("One tennis serve", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6aa0e9d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9d170fc", 
     option = "One player", value = "One player", label = structure("One player", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1058,26 +1060,26 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "rows-answer", question = "rows"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1934015658.5994, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 778277019.637586, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "logicals1", question = structure("What does <code>winner<\u002fcode> represent?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_41a78d6", 
+"character")), answers = list(structure(list(id = "lnr_ans_16551f1", 
     option = "The name of the player who won the match", value = "The name of the player who won the match", 
     label = structure("The name of the player who won the match", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5b6d7d6", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a45de3e", 
     option = "The tournament the match was part of", value = "The tournament the match was part of", 
     label = structure("The tournament the match was part of", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d4b13e5", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c0298f8", 
     option = "The name of the player who lost the match", value = "The name of the player who lost the match", 
     label = structure("The name of the player who lost the match", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_eaa3777", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_df0c510", 
     option = "The round of the match", value = "The round of the match", 
     label = structure("The round of the match", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1088,27 +1090,27 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "logicals1-answer", question = "logicals1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 2016912104.0608, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1469334028.81579, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "logicals2", question = structure("What does <code>surface<\u002fcode> represent?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_fb83e5b", 
+"character")), answers = list(structure(list(id = "lnr_ans_1f7bffe", 
     option = "The number of aces in the match", value = "The number of aces in the match", 
     label = structure("The number of aces in the match", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fc9c597", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fe5f9f6", 
     option = "The number of service games in the match", value = "The number of service games in the match", 
     label = structure("The number of service games in the match", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6e69091", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_70cf269", 
     option = "Whether the game was played on clay, grass, or hard court", 
     value = "Whether the game was played on clay, grass, or hard court", 
     label = structure("Whether the game was played on clay, grass, or hard court", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e3361b2", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e97cc09", 
     option = "The type of surface the winner prefers", value = "The type of surface the winner prefers", 
     label = structure("The type of surface the winner prefers", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1119,27 +1121,27 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "logicals2-answer", question = "logicals2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 9636720.99551255, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1315265998.88753, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "logicals3", question = structure("What does <code>total_ServiceGames<\u002fcode> represent?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_bde6c4c", 
+"character")), answers = list(structure(list(id = "lnr_ans_4594b95", 
     option = "The number of aces in the match", value = "The number of aces in the match", 
     label = structure("The number of aces in the match", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_96e0568", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_39c9cee", 
     option = "The number of service games in the match", value = "The number of service games in the match", 
     label = structure("The number of service games in the match", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a777c50", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f861449", 
     option = "The number of service games in the tournament", 
     value = "The number of service games in the tournament", 
     label = structure("The number of service games in the tournament", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c50e9f9", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9984762", 
     option = "The total number of serves in the match", value = "The total number of serves in the match", 
     label = structure("The total number of serves in the match", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1150,26 +1152,26 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "logicals3-answer", question = "logicals3"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 563722438.737496, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 363900699.330546, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "logicals4", question = structure("What does <code>total_aces<\u002fcode> represent?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_9d13099", 
+"character")), answers = list(structure(list(id = "lnr_ans_c813f77", 
     option = "The number of aces in the match", value = "The number of aces in the match", 
     label = structure("The number of aces in the match", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d189853", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f7627b4", 
     option = "The number of service games in the match", value = "The number of service games in the match", 
     label = structure("The number of service games in the match", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8b21a01", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7b1730f", 
     option = "The number of aces in the tournament", value = "The number of aces in the tournament", 
     label = structure("The number of aces in the tournament", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bd01c27", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9246e71", 
     option = "The total number of aces by the match's winner", 
     value = "The total number of aces by the match's winner", 
     label = structure("The total number of aces by the match’s winner", html = TRUE, class = c("html", 
@@ -1181,7 +1183,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "logicals4-answer", question = "logicals4"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1106106866.98493, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1661146419.72647, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -1348,27 +1350,27 @@ learnr:::store_exercise_cache(structure(list(label = "mean_and_boxplots", global
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "surf_diff", question = structure("What surface looks to be most different from the others, and how so?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_3a3a721", 
+"character")), answers = list(structure(list(id = "lnr_ans_d03f347", 
     option = "Clay, higher than the others", value = "Clay, higher than the others", 
     label = structure("Clay, higher than the others", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9f85acc", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc306e8", 
     option = "Clay, lower than the others", value = "Clay, lower than the others", 
     label = structure("Clay, lower than the others", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8d1579", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6b4e323", 
     option = "Grass, higher than the others", value = "Grass, higher than the others", 
     label = structure("Grass, higher than the others", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_15b6331", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ea983b8", 
     option = "Grass, lower than the others", value = "Grass, lower than the others", 
     label = structure("Grass, lower than the others", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7b36b4f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_580d93a", 
     option = "Hard Court, higher than the others", value = "Hard Court, higher than the others", 
     label = structure("Hard Court, higher than the others", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d467f53", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4c386be", 
     option = "Hard Course, lower than the others", value = "Hard Course, lower than the others", 
     label = structure("Hard Course, lower than the others", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1379,7 +1381,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "surf_diff-answer", question = "surf_diff"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 2011656682.06325, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1212583050.43535, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -1489,7 +1491,7 @@ learnr:::store_exercise_cache(structure(list(label = "dummy", global_setup = str
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "equation_q_B0", 
     question = structure("What does β0 in our model AceRate=β0 + β1<em>Hard + β2<\u002fem>Clay + ε represent? β0 is the average _______ when __________. (The blanks can be more than one word.)", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_e175443", 
+    "character")), answers = list(structure(list(id = "lnr_ans_71b430c", 
         option = "", value = "", label = structure("", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1498,7 +1500,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
         incorrect = NULL, message = structure("Example correct answer: β0 is the average <u>ace rate<\u002fu> when <u>playing on grass<\u002fu>, or AceRate(Grass).", html = TRUE, class = c("html", 
         "character")), post_message = NULL), ids = list(answer = "equation_q_B0-answer", 
         question = "equation_q_B0"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 308319909.356427, options = list(
+    allow_retry = FALSE, seed = 733415987.158477, options = list(
         placeholder = "Enter answer here...", trim = TRUE, rows = 5)), class = c("learnr_text", 
 "tutorial_question")), session = session)
 </script>
@@ -1506,7 +1508,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "equation_q_B2", 
     question = structure("In our model AceRate=β0 + β1<em>Hard + β2<\u002fem>Clay + ε, β2 is the average difference in _______ for games on __________ versus _________. (The blanks can be more than one word.)", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_9bad4fc", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c55695d", 
         option = "", value = "", label = structure("", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1515,7 +1517,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
         incorrect = NULL, message = structure("Example correct answer: β2 is the average difference in <u>ace rate<\u002fu> for games on <u>clay<\u002fu> versus <u>grass<\u002fu>.", html = TRUE, class = c("html", 
         "character")), post_message = NULL), ids = list(answer = "equation_q_B2-answer", 
         question = "equation_q_B2"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 515649936.759882, options = list(
+    allow_retry = FALSE, seed = 476370684.778173, options = list(
         placeholder = "Enter answer here...", trim = TRUE, rows = 5)), class = c("learnr_text", 
 "tutorial_question")), session = session)
 </script>
@@ -1523,7 +1525,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "mean_diffs_q", 
     question = structure("What are the differences in ace rate per service game across surfaces?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_a86c1f", 
+    "character")), answers = list(structure(list(id = "lnr_ans_20a4202", 
         option = "", value = "", label = structure("", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1532,23 +1534,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
         incorrect = NULL, message = structure("Example correct answer: Grass is highest at 0.58 aces per service game. Hard court is about 0.05 lower than grass, and clay is 0.25 below grass.", html = TRUE, class = c("html", 
         "character")), post_message = NULL), ids = list(answer = "mean_diffs_q-answer", 
         question = "mean_diffs_q"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 1424731257.83656, options = list(
+    allow_retry = FALSE, seed = 1408115053.8443, options = list(
         placeholder = "Enter answer here...", trim = TRUE, rows = 5)), class = c("learnr_text", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "output_B0", question = structure("Which row of the Coefficients table in the output above corresponds to the average ace rate for grass surfaces?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_25c6c39", 
+"character")), answers = list(structure(list(id = "lnr_ans_940ea7e", 
     option = "(Intercept) = 0.582", value = "(Intercept) = 0.582", 
     label = structure("(Intercept) = 0.582", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("This is the mean ace rate for grass surfaces, so this must be β0!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_35d76a6", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d2458e6", 
     option = "surfaceHard = -0.048", value = "surfaceHard = -0.048", 
     label = structure("surfaceHard = -0.048", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_23093f3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_808fea7", 
     option = "surfaceClay = -0.250", value = "surfaceClay = -0.250", 
     label = structure("surfaceClay = -0.250", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1559,22 +1561,22 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "output_B0-answer", question = "output_B0"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1289602780.39948, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 647289715.198582, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "output_B2", question = structure("Which row of the Coefficients table in the output above corresponds to the average ace rate difference for clay versus grass surfaces?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_8d40b4a", 
+"character")), answers = list(structure(list(id = "lnr_ans_6332daa", 
     option = "(Intercept) = 0.582", value = "(Intercept) = 0.582", 
     label = structure("(Intercept) = 0.582", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d4e569e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3a3616c", 
     option = "surfaceHard = -0.048", value = "surfaceHard = -0.048", 
     label = structure("surfaceHard = -0.048", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e98f334", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5f02502", 
     option = "surfaceClay = -0.250", value = "surfaceClay = -0.250", 
     label = structure("surfaceClay = -0.250", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("This is the mean ace rate difference for hard court versus grass surfaces, so this must be β2!", html = TRUE, class = c("html", 
@@ -1586,23 +1588,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "output_B2-answer", question = "output_B2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1497549240.80265, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 620037996.211272, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "output_B1", question = structure("Which row of the Coefficients table in the output above corresponds to the average ace rate difference for hard court versus grass surfaces?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_52788d", 
+"character")), answers = list(structure(list(id = "lnr_ans_bf4260a", 
     option = "(Intercept) = 0.582", value = "(Intercept) = 0.582", 
     label = structure("(Intercept) = 0.582", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cc9b62f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7211a5e", 
     option = "surfaceHard = -0.048", value = "surfaceHard = -0.048", 
     label = structure("surfaceHard = -0.048", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("This is the mean ace rate difference for hard court versus grass surfaces, so this must be β1!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_52bb575", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ed635cd", 
     option = "surfaceClay = -0.250", value = "surfaceClay = -0.250", 
     label = structure("surfaceClay = -0.250", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1613,7 +1615,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "output_B1-answer", question = "output_B1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 765476815.643547, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 428299030.300558, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -1732,7 +1734,7 @@ learnr:::store_exercise_cache(structure(list(label = "pairwise_anova", global_se
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "conclusion_sport", 
     question = structure("In the end, we can conclude that:", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_aeb7e63", 
+    "character")), answers = list(structure(list(id = "lnr_ans_af14ccb", 
         option = "", value = "", label = structure("", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1741,7 +1743,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
         incorrect = NULL, message = structure("Example correct answer: Surface type is related to ace rate, with grass having the highest rate, hard court being slightly lower, and clay being much lower.", html = TRUE, class = c("html", 
         "character")), post_message = NULL), ids = list(answer = "conclusion_sport-answer", 
         question = "conclusion_sport"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 1102142358.48677, options = list(
+    allow_retry = FALSE, seed = 530685083.75288, options = list(
         placeholder = "Enter answer here...", trim = TRUE, rows = 5)), class = c("learnr_text", 
 "tutorial_question")), session = session)
 </script>
@@ -1749,7 +1751,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "conclusion_stats", 
     question = structure("How did statistics help us answer this question? What methods did we use?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_f972f4f", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d4598a4", 
         option = "", value = "", label = structure("", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1758,7 +1760,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label =
         incorrect = NULL, message = structure("Example correct answer: We used linear regression with dummy variables to analyze how a categorical variable (surface) is associated with a cotninuous outcome (ace rate). This was equivalent to running an ANOVA analysis but provided additional information such as how different ace rates are on each surface, rather than just that they are or are not.", html = TRUE, class = c("html", 
         "character")), post_message = NULL), ids = list(answer = "conclusion_stats-answer", 
         question = "conclusion_stats"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 549517484.744111, options = list(
+    allow_retry = FALSE, seed = 1902698975.11399, options = list(
         placeholder = "Enter answer here...", trim = TRUE, rows = 5)), class = c("learnr_text", 
 "tutorial_question")), session = session)
 </script>

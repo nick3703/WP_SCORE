@@ -41,6 +41,10 @@ match2023_df <- read.csv("atp_matches_2023_analysis.csv") %>%
 
 ## Welcome
 
+An accompanying worksheet for instructors is available [here](https://github.com/nick3703/WP_SCORE/raw/main/external_submissions/Tennis/Tennis_Ace_Rate_Worksheet_Version_forInstructors.docx)
+
+A worksheet for students to follow is available  [here](https://github.com/nick3703/WP_SCORE/raw/main/external_submissions/Tennis/Tennis_Ace_Rate_Worksheet_Version_forStudents.docx) 
+
 Please watch this intro video from tennis analyst Dr. Stephanie Kovalchik to learn about the questions we'll be investigating today!
 
 <iframe src="https://drive.google.com/file/d/1elu4ZeSGuLIO5AgUnh4nB54btxtPxNkJ/preview" width="640" height="480" allow="autoplay">
