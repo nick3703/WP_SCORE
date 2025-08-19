@@ -2,13 +2,13 @@
 title: "An Exploration of Pitch Sequencing in Baseball"
 author: "Max Felter, Matt Toner, and Rachel Gidaro"
 date: "`r Sys.Date()`"
-description: Model Assessment through TPR/FPR, PPV/NPV, and F1 Score
+description: Assessing pitch sequence through Transition Matrices
 editor: 
   canonical: true
 categories:
-  - F1 Score
-  - Confusion Matrix
-  - Model Assessment
+  - Transition Matrices
+  - Expectancy Matrics
+  - Logistic Regression
 ---
 
 # Introduction
