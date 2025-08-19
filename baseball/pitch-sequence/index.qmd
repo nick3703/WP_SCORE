@@ -53,7 +53,7 @@ To successfully complete this module, students should have prior knowledge of th
 PITCHf/x is a pitch tracking system installed in all MLB stadiums that effectively measures pitch metrics such as location of the ball as it passes the plate, pitch type, and release speed. PITCHf/x also includes other data relevant to each at-bat such as the batter, the pitcher, the outcome, and the count at the time of pitch. The PITCHf/x entity releases its data online for open use, though it is quite large due to the shear number of pitches in each season. Due to the size, we will produce our analysis using only pitches of the most recent MLB season, 2024. Also due to the size of the dataset we could not include all of the variables. The subset we will use includes:
 
 | Variable | Description |
-|------------------------------------|------------------------------------|
+|----|----|
 | game_date | Date of the Game |
 | game_pk | Pre-pitch number of outs |
 | at_bat_number | Plate appearance number of the game |
