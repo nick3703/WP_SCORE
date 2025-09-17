@@ -2,7 +2,7 @@
 title: "West Point SCORE Module Pre-print Repository"
 ---
 
-This page contains education materials for the [SCORE Network](https://scorenetwork.org/index.html) that were created by faculty and students from the [Department of Mathematical Sciences at West Point](https://www.westpoint.edu/academics/departments/mathematical-sciences){target="_blank"}.
+This pages contains education materials for the [SCORE Network](https://scorenetwork.org/index.html) that were created by faculty and students from the [Department of Mathematical Sciences at West Point](https://www.westpoint.edu/academics/departments/mathematical-sciences){target="_blank"}.
 
 The [SCORE Network](https://scorenetwork.org/index.html){target="_blank"} Module Repository enables you to search for modules by either sport (along the left), or you can browse [by statistics and data science topic](by-statsds-topic.qmd).
 
